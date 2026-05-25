@@ -1,0 +1,92 @@
+/**
+ * @file
+ * Content Block component styles — secondary page heading + rich text sections.
+ *
+ * Compiled from _06-secondary-page.scss.
+ *
+ * Selectors:
+ *   .content-sections     — Wrapper around all content_block paragraphs on secondary pages.
+ *   .content-block        — Individual section (heading + body).
+ *   .content-block__heading
+ *   .content-block__text  — Rich text body wrapper.
+ *   .content-block__text p
+ *
+ * Body class scope: .node--type-secondary-page adds context for page-level overrides.
+ */
+
+/* ── Content sections wrapper ───────────────────────────────────────────────── */
+.content-sections {
+  padding: 0 88px 80px;
+  display: flex;
+  flex-direction: column;
+  gap: 80px;
+}
+
+/* ── Individual content block ───────────────────────────────────────────────── */
+.content-block {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.content-block__heading {
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: clamp(22px, calc(22px + 10 * (100vw - 384px) / 1056), 32px);
+  font-weight: 700;
+  line-height: 1.25;
+  color: #000000;
+  margin: 0;
+}
+
+.content-block__text {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.content-block__text p {
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: clamp(15px, calc(15px + 3 * (100vw - 384px) / 1056), 18px);
+  font-weight: 400;
+  line-height: 1.556;
+  color: #000000;
+  margin: 0;
+}
+
+/* ── xxl: ≥1920px ───────────────────────────────────────────────────────────── */
+@media (min-width: 1920px) {
+  .content-sections {
+    padding: 0 120px 80px;
+  }
+}
+
+/* ── Windows laptop: ≤1366px ────────────────────────────────────────────────── */
+@media (max-width: 1366px) {
+  .content-sections {
+    padding: 0 48px 64px;
+  }
+}
+
+/* ── Large tablet: ≤1200px ──────────────────────────────────────────────────── */
+@media (max-width: 1200px) {
+  .content-sections {
+    padding: 0 32px 56px;
+    gap: 56px;
+  }
+}
+
+/* ── Tablet: ≤820px ─────────────────────────────────────────────────────────── */
+@media (max-width: 820px) {
+  .content-sections {
+    padding: 0 24px 48px;
+    gap: 48px;
+  }
+}
+
+/* ── Mobile: ≤402px ─────────────────────────────────────────────────────────── */
+@media (max-width: 402px) {
+  .content-sections {
+    padding: 0 16px 40px;
+    gap: 40px;
+  }
+}

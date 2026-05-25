@@ -1,0 +1,333 @@
+/**
+ * @file
+ * Register Modal component styles.
+ * Ported from wireframe scss/_components/_07-register-modal.scss.
+ * Includes Webform field error overrides to match the modal design.
+ */
+
+/* ── Modal shell ──────────────────────────────────────────────────────────── */
+#register-modal .modal-dialog {
+  max-width: 856px;
+  margin: 240px auto 40px;
+}
+
+#register-modal .modal-content {
+  border: none;
+  border-radius: 0;
+  padding: 80px;
+  position: relative;
+}
+
+/* ── Close button ─────────────────────────────────────────────────────────── */
+#register-modal .register-modal__close {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  width: 44px;
+  height: 44px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #1a1a1a;
+  transition: opacity 0.2s;
+}
+
+#register-modal .register-modal__close:hover {
+  opacity: 0.6;
+}
+
+#register-modal .register-modal__close:focus {
+  outline: 2px solid #2b2b2b;
+  outline-offset: 2px;
+  border-radius: 2px;
+}
+
+#register-modal .register-modal__close svg {
+  width: 28px;
+  height: 28px;
+}
+
+/* ── Header block ─────────────────────────────────────────────────────────── */
+#register-modal .register-modal__header {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  text-align: center;
+  margin-bottom: 48px;
+}
+
+#register-modal .register-modal__title {
+  font-size: clamp(28px, calc(28px + 16 * (100vw - 384px) / 1056), 44px);
+  font-weight: 700;
+  line-height: 1.2;
+  color: #1a1a1a;
+  margin: 0;
+}
+
+#register-modal .register-modal__subtitle {
+  font-size: clamp(14px, calc(14px + 4 * (100vw - 384px) / 1056), 18px);
+  font-weight: 700;
+  line-height: 1.5;
+  color: #1a1a1a;
+  margin: 0;
+}
+
+/* ── Form wrapper — Webform default layout reset ──────────────────────────── */
+#register-modal .register-modal__form-wrapper .webform-submission-form {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  align-items: flex-start;
+  width: 100%;
+}
+
+/* Remove default Drupal form-item bottom margin inside modal */
+#register-modal .register-modal__form-wrapper .form-item {
+  margin-bottom: 0;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Hide email label — placeholder conveys the field purpose (matches wireframe).
+   :not(.error) ensures jQuery Validate's injected error label is never hidden. */
+#register-modal
+  .register-modal__form-wrapper
+  .form-type-email
+  > label:not(.error),
+#register-modal
+  .register-modal__form-wrapper
+  .form-item-email
+  > label:not(.error) {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* ── Email field ──────────────────────────────────────────────────────────── */
+#register-modal .register-modal__form-wrapper .form-type-email input,
+#register-modal .register-modal__form-wrapper input[type="email"] {
+  width: 100%;
+  max-width: 560px;
+  border: 1px solid #cccccc;
+  border-radius: 2px;
+  padding: 8px 24px;
+  font-size: 18px;
+  font-weight: 400;
+  line-height: 1.5;
+  color: #333333;
+  background-color: #ffffff;
+}
+
+#register-modal .register-modal__form-wrapper input[type="email"]::placeholder {
+  color: #999999;
+}
+
+#register-modal .register-modal__form-wrapper input[type="email"]:focus {
+  outline: 2px solid #2b2b2b;
+  border-color: #2b2b2b;
+  box-shadow: none;
+}
+
+/* ── Consent checkbox row ─────────────────────────────────────────────────── */
+#register-modal .register-modal__form-wrapper .form-type-checkbox,
+#register-modal .register-modal__form-wrapper .form-item--type-checkbox {
+  display: flex;
+  flex-direction: row;
+  /* flex-wrap so jQuery Validate's injected label.error wraps to a new line */
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px 12px;
+  padding: 12px 0;
+}
+
+#register-modal
+  .register-modal__form-wrapper
+  .form-type-checkbox
+  input[type="checkbox"],
+#register-modal
+  .register-modal__form-wrapper
+  .form-item--type-checkbox
+  input[type="checkbox"] {
+  width: 24px;
+  height: 24px;
+  min-width: 24px;
+  cursor: pointer;
+  accent-color: #2b2b2b;
+  flex-shrink: 0;
+}
+
+#register-modal .register-modal__form-wrapper .form-type-checkbox label,
+#register-modal .register-modal__form-wrapper .form-item--type-checkbox label {
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 1.5;
+  color: #1a1a1a;
+  cursor: pointer;
+  margin: 0;
+}
+
+/* ── Submit button ────────────────────────────────────────────────────────── */
+#register-modal .register-modal__form-wrapper .form-actions,
+#register-modal .register-modal__form-wrapper .webform-actions {
+  width: 100%;
+}
+
+#register-modal
+  .register-modal__form-wrapper
+  .form-actions
+  input[type="submit"],
+#register-modal
+  .register-modal__form-wrapper
+  .webform-actions
+  input[type="submit"],
+#register-modal .register-modal__form-wrapper .form-submit {
+  width: 100%;
+  max-width: 560px;
+  padding: 10px 32px;
+  background-color: #2b2b2b;
+  color: #ffffff;
+  font-size: 18px;
+  font-weight: 700;
+  line-height: 1.5;
+  border: none;
+  border-radius: 2px;
+  cursor: pointer;
+  text-align: center;
+  transition: background-color 0.2s ease;
+}
+
+#register-modal .register-modal__form-wrapper .form-submit:hover {
+  background-color: #3d3d3d;
+}
+
+#register-modal .register-modal__form-wrapper .form-submit:focus {
+  outline: 2px solid #333333;
+  outline-offset: 2px;
+}
+
+/* ── Webform / clientside_validation error states ────────────────────────── */
+
+/* Red border on invalid email input */
+#register-modal .register-modal__form-wrapper .form-item--error input,
+#register-modal .register-modal__form-wrapper .form-item--error input:focus,
+#register-modal .register-modal__form-wrapper input[type="email"].error,
+#register-modal .register-modal__form-wrapper input[type="email"].error:focus {
+  border-color: #d32f2f;
+  outline-color: #d32f2f;
+}
+
+/* Checkbox input red outline when invalid — error on the input only, not the wrapper */
+#register-modal .register-modal__form-wrapper input[type="checkbox"].error {
+  outline: 2px solid #d32f2f;
+  outline-offset: 1px;
+}
+
+/* Base error message style — jQuery Validate: label.error
+   Webform server-side: .form-item__error-message */
+#register-modal .register-modal__form-wrapper label.error,
+#register-modal .register-modal__form-wrapper .form-item__error-message,
+#register-modal .register-modal__form-wrapper .form-item--error small.error {
+  color: #d32f2f;
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 1.4;
+  margin-top: 4px;
+  display: block;
+  cursor: default;
+}
+
+/* Email error label — match input max-width */
+#register-modal .register-modal__form-wrapper .form-type-email label.error {
+  max-width: 560px;
+  width: 100%;
+}
+
+/* Checkbox error label — must wrap to a full-width new line below the row.
+   jQuery Validate injects label.error between <input> and the consent <label>,
+   so we push it below using order + flex-basis. */
+#register-modal .register-modal__form-wrapper .form-type-checkbox label.error,
+#register-modal
+  .register-modal__form-wrapper
+  .form-item--type-checkbox
+  label.error {
+  order: 10;
+  flex-basis: 100%;
+  width: 100%;
+  margin-top: 0;
+}
+
+/* Suppress browser :invalid ring — module error styles handle it */
+#register-modal .register-modal__form-wrapper input:invalid {
+  outline: none;
+  box-shadow: none;
+}
+
+/* ── Webform confirmation inline message ─────────────────────────────────── */
+#register-modal .register-modal__form-wrapper .webform-confirmation {
+  text-align: center;
+  padding: 24px 0;
+  font-size: 18px;
+  font-weight: 700;
+  color: #1a1a1a;
+}
+
+/* ── Tablet: ≤820px ──────────────────────────────────────────────────────── */
+@media (max-width: 820px) {
+  #register-modal .modal-dialog {
+    max-width: 90vw;
+    margin: 80px auto 40px;
+  }
+
+  #register-modal .modal-content {
+    padding: 40px;
+  }
+
+  #register-modal .register-modal__header {
+    margin-bottom: 32px;
+  }
+
+  #register-modal .register-modal__form-wrapper input[type="email"],
+  #register-modal .register-modal__form-wrapper .form-submit {
+    max-width: 100%;
+  }
+}
+
+/* ── Mobile: ≤402px ─────────────────────────────────────────────────────── */
+@media (max-width: 402px) {
+  #register-modal .modal-dialog {
+    max-width: 95vw;
+    margin: 40px auto 20px;
+  }
+
+  #register-modal .modal-content {
+    padding: 24px 20px;
+  }
+
+  #register-modal .register-modal__header {
+    gap: 16px;
+    margin-bottom: 24px;
+  }
+
+  #register-modal .register-modal__close {
+    top: 8px;
+    right: 8px;
+  }
+}
+
+/* ── xs: ≤384px ─────────────────────────────────────────────────────────── */
+@media (max-width: 384px) {
+  #register-modal .modal-content {
+    padding: 20px 16px;
+  }
+}

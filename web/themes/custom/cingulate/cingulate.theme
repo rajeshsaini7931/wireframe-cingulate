@@ -1,0 +1,344 @@
+<?php
+
+declare(strict_types=1);
+
+/**
+ * @file
+ * Functions to support theming in the Cingulate theme.
+ */
+
+/**
+ * Implements hook_preprocess_HOOK() for html.html.twig.
+ */
+function cingulate_preprocess_html(array &$variables): void {
+
+}
+
+/**
+ * Implements hook_preprocess_HOOK() for page.html.twig.
+ */
+function cingulate_preprocess_page(array &$variables): void {
+  // Header and footer variables are now provided by CingulateSiteHeaderBlock
+  // and CingulateSiteFooterBlock via cingulate_blocks.settings config.
+  // Add page-level variables here as needed.
+}
+
+/**
+ * Implements hook_preprocess_HOOK() for node.html.twig.
+ */
+function cingulate_preprocess_node(array &$variables): void {
+
+}
+
+/**
+ * Implements hook_preprocess_HOOK() for paragraph--hero-banner.html.twig.
+ *
+ * Extracts field values from the Hero Banner paragraph entity and exposes
+ * them as clean Twig variables so the template controls all markup.
+ */
+function cingulate_preprocess_paragraph__hero_banner(array &$variables): void {
+  /** @var \Drupal\paragraphs\Entity\Paragraph $paragraph */
+  $paragraph = $variables['paragraph'];
+
+  // Hero heading — plain text string; Twig will auto-escape it.
+  if ($paragraph->hasField('field_hero_heading')
+    && !$paragraph->get('field_hero_heading')->isEmpty()) {
+    $variables['hero_heading'] = $paragraph->get('field_hero_heading')
+      ->getString();
+  }
+
+  // Hero body — processed markup (MarkupInterface); safe to output without |raw.
+  if ($paragraph->hasField('field_hero_body')
+    && !$paragraph->get('field_hero_body')->isEmpty()) {
+    $variables['hero_body'] = $paragraph->get('field_hero_body')
+      ->first()
+      ->processed;
+  }
+
+  // Bubble paragraph cache metadata into the render array.
+  $variables['#cache']['tags'] = $paragraph->getCacheTags();
+}
+
+/**
+ * Implements hook_preprocess_HOOK() for paragraph--symptoms-adhd.html.twig.
+ */
+function cingulate_preprocess_paragraph__symptoms_adhd(array &$variables): void {
+  /** @var \Drupal\paragraphs\Entity\Paragraph $paragraph */
+  $paragraph = $variables['paragraph'];
+
+  $slides_raw = [];
+
+  if ($paragraph->hasField('field_slides')
+    && !$paragraph->get('field_slides')->isEmpty()) {
+
+    foreach ($paragraph->get('field_slides')->referencedEntities() as $slide) {
+      /** @var \Drupal\paragraphs\Entity\Paragraph $slide */
+      if (!$slide->hasField('field_slide_image')
+        || $slide->get('field_slide_image')->isEmpty()) {
+        continue;
+      }
+
+      /** @var \Drupal\media\Entity\Media $media */
+      $media = $slide->get('field_slide_image')->entity;
+      if (!$media) {
+        continue;
+      }
+
+      // Load the source image file from the media entity.
+      $source_field = $media->getSource()->getConfiguration()['source_field'];
+      if (!$media->hasField($source_field)
+        || $media->get($source_field)->isEmpty()) {
+        continue;
+      }
+
+      /** @var \Drupal\file\Entity\File $file */
+      $file = $media->get($source_field)->entity;
+      if (!$file) {
+        continue;
+      }
+
+      $slides_raw[] = [
+        'image_url' => \Drupal::service('file_url_generator')
+          ->generateAbsoluteString($file->getFileUri()),
+        'image_alt' => $media->get($source_field)->alt ?? '',
+      ];
+
+      // Bubble media and file cache tags.
+      $variables['#cache']['tags'] = array_merge(
+        $variables['#cache']['tags'] ?? [],
+        $media->getCacheTags(),
+        $file->getCacheTags(),
+      );
+    }
+  }
+
+  $variables['slides_raw'] = $slides_raw;
+
+  // Bubble paragraph cache metadata.
+  $variables['#cache']['tags'] = array_merge(
+    $variables['#cache']['tags'] ?? [],
+    $paragraph->getCacheTags(),
+  );
+}
+
+/**
+ * Implements hook_preprocess_HOOK() for paragraph--resource-materials.html.twig.
+ *
+ * Loads all published resource_item nodes, extracts thumbnail URL, and groups
+ * them by category term name (lowercased) so Twig can render per-tab panels.
+ */
+function cingulate_preprocess_paragraph__resource_materials(array &$variables): void {
+  /** @var \Drupal\paragraphs\Entity\Paragraph $paragraph */
+  $paragraph = $variables['paragraph'];
+
+  $resource_groups = [];
+  $cache_tags       = $paragraph->getCacheTags();
+  $cache_tags[]     = 'node_list:resource_item';
+
+  $nids = \Drupal::entityQuery('node')
+    ->accessCheck(TRUE)
+    ->condition('type', 'resource_item')
+    ->condition('status', 1)
+    ->sort('created', 'DESC')
+    ->execute();
+
+  if (!empty($nids)) {
+    $nodes = \Drupal::entityTypeManager()
+      ->getStorage('node')
+      ->loadMultiple($nids);
+
+    /** @var \Drupal\node\NodeInterface $node */
+    foreach ($nodes as $node) {
+      // Resolve category key.
+      $category_key = 'podcasts';
+      if ($node->hasField('field_resource_category')
+        && !$node->get('field_resource_category')->isEmpty()) {
+        /** @var \Drupal\taxonomy\Entity\Term $term */
+        $term = $node->get('field_resource_category')->entity;
+        if ($term) {
+          $category_key = strtolower($term->getName());
+          $cache_tags    = array_merge($cache_tags, $term->getCacheTags());
+        }
+      }
+
+      // Resolve thumbnail URL and alt text.
+      $thumb_url = '';
+      $thumb_alt = '';
+      if ($node->hasField('field_resource_thumbnail')
+        && !$node->get('field_resource_thumbnail')->isEmpty()) {
+        /** @var \Drupal\media\Entity\Media $media */
+        $media = $node->get('field_resource_thumbnail')->entity;
+        if ($media) {
+          $source_field = $media->getSource()->getConfiguration()['source_field'];
+          if ($media->hasField($source_field)
+            && !$media->get($source_field)->isEmpty()) {
+            /** @var \Drupal\file\Entity\File $file */
+            $file = $media->get($source_field)->entity;
+            if ($file) {
+              $thumb_url = \Drupal::service('file_url_generator')
+                ->generateAbsoluteString($file->getFileUri());
+              $thumb_alt = $media->get($source_field)->alt ?? '';
+              $cache_tags = array_merge(
+                $cache_tags,
+                $media->getCacheTags(),
+                $file->getCacheTags(),
+              );
+            }
+          }
+        }
+      }
+
+      // Resolve embed URL.
+      $embed_url = '';
+      if ($node->hasField('field_resource_embed_url')
+        && !$node->get('field_resource_embed_url')->isEmpty()) {
+        $embed_url = $node->get('field_resource_embed_url')->uri ?? '';
+      }
+
+      // Resolve transcript plain text.
+      $transcript = '';
+      if ($node->hasField('field_resource_transcript')
+        && !$node->get('field_resource_transcript')->isEmpty()) {
+        $transcript = $node->get('field_resource_transcript')->value ?? '';
+      }
+
+      $resource_groups[$category_key][] = [
+        'title'      => $node->getTitle(),
+        'topic'      => $node->hasField('field_resource_topic')
+          ? $node->get('field_resource_topic')->getString()
+          : '',
+        'duration'   => $node->hasField('field_resource_duration')
+          ? $node->get('field_resource_duration')->getString()
+          : '',
+        'thumb_url'  => $thumb_url,
+        'thumb_alt'  => $thumb_alt,
+        'embed_url'  => $embed_url,
+        'transcript' => $transcript,
+        'nid'        => $node->id(),
+      ];
+
+      $cache_tags = array_merge($cache_tags, $node->getCacheTags());
+    }
+  }
+
+  $variables['resource_groups'] = $resource_groups;
+  $variables['#cache']['tags']  = array_unique($cache_tags);
+  $variables['#cache']['contexts'][] = 'user.roles';
+}
+
+/**
+ * Implements hook_preprocess_HOOK() for node--secondary-page.html.twig.
+ *
+ * Splits field_page_sections into hero (first paragraph, expected hero_banner)
+ * and sections (remaining paragraphs wrapped in .content-sections). The split
+ * render arrays are passed separately to the template so CSS scoping and markup
+ * structure match the wireframe exactly.
+ */
+function cingulate_preprocess_node__secondary_page(array &$variables): void {
+  /** @var \Drupal\node\NodeInterface $node */
+  $node = $variables['node'];
+
+  if (!$node->hasField('field_page_sections')
+    || $node->get('field_page_sections')->isEmpty()) {
+    return;
+  }
+
+  /** @var \Drupal\Core\Field\EntityReferenceFieldItemListInterface $sections_field */
+  $sections_field = $node->get('field_page_sections');
+
+  // Build individual render arrays per delta.
+  $paragraphs = [];
+  foreach ($sections_field as $delta => $item) {
+    $paragraph = $item->entity;
+    if (!$paragraph) {
+      continue;
+    }
+    $paragraphs[$delta] = [
+      '#type'   => 'entity_revisions',
+      '#entity' => $paragraph,
+    ];
+  }
+
+  // Use the rendered content.field_page_sections children directly.
+  // field_page_sections renders each delta as a child keyed by integer.
+  $rendered_field = $variables['content']['field_page_sections'];
+
+  // Collect integer-keyed children (individual paragraph render items).
+  $items = [];
+  foreach (\Drupal\Core\Render\Element::children($rendered_field) as $key) {
+    $items[$key] = $rendered_field[$key];
+  }
+
+  // First delta = hero banner; rest = content sections.
+  // resource_materials paragraphs are extracted separately so they render
+  // outside .content-sections at full width (they have their own horizontal
+  // padding matching the homepage layout).
+  $hero_items      = [];
+  $content_items   = [];
+  $resource_items  = [];
+
+  foreach ($sections_field as $delta => $field_item) {
+    $paragraph = $field_item->entity;
+    $bundle    = $paragraph ? $paragraph->bundle() : '';
+
+    if (empty($hero_items)) {
+      // First paragraph is always the hero.
+      if (isset($items[$delta])) {
+        $hero_items[$delta] = $items[$delta];
+      }
+    }
+    elseif ($bundle === 'resource_materials') {
+      if (isset($items[$delta])) {
+        $resource_items[$delta] = $items[$delta];
+      }
+    }
+    else {
+      if (isset($items[$delta])) {
+        $content_items[$delta] = $items[$delta];
+      }
+    }
+  }
+
+  // Carry cache metadata from the parent field render array.
+  $cache_meta = [
+    '#cache' => $rendered_field['#cache'] ?? [],
+  ];
+
+  $variables['hero_section']      = array_merge($hero_items, $cache_meta);
+  $variables['content_sections']  = array_merge($content_items, $cache_meta);
+  $variables['resource_section']  = array_merge($resource_items, $cache_meta);
+
+  // Build breadcrumb items as plain string arrays so the Twig template can
+  // use a simple {% if item.url %} check (empty string is falsy in Twig).
+  // The homepage is the ADHD Overview landing page, so the first crumb is
+  // explicitly labelled "ADHD Overview" to match the wireframe design.
+  $breadcrumb_obj   = \Drupal::service('breadcrumb')
+    ->build(\Drupal::routeMatch());
+  $front_url        = \Drupal\Core\Url::fromRoute('<front>')->toString();
+  $breadcrumb_items = [
+    [
+      'text' => (string) t('ADHD Overview'),
+      'url'  => $front_url,
+    ],
+    [
+      'text' => $node->label(),
+      'url'  => '',
+    ],
+  ];
+
+  $variables['page_breadcrumb'] = $breadcrumb_items;
+
+  // Merge breadcrumb cache metadata so the node render array stays valid.
+  // Breadcrumb directly implements CacheableDependencyInterface.
+  $variables['#cache']['tags'] = array_unique(array_merge(
+    $node->getCacheTags(),
+    $breadcrumb_obj->getCacheTags(),
+  ));
+  $variables['#cache']['contexts'] = array_unique(array_merge(
+    $breadcrumb_obj->getCacheContexts(),
+    ['url.path', 'languages:language_interface'],
+  ));
+
+  // Suppress the default field output — we render manually above.
+  unset($variables['content']['field_page_sections']);
+}

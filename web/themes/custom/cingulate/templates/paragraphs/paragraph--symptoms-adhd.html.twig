@@ -1,0 +1,135 @@
+{#
+/**
+ * @file
+ * Template for the Symptoms of ADHD paragraph (Bootstrap Carousel).
+ *
+ * Available variables:
+ *   - paragraph: The paragraph entity (symptoms_adhd bundle).
+ *   - content: Render array of the paragraph's fields.
+ *     - content.field_section_heading: Section heading string.
+ *     - content.field_slides: Rendered symptoms_slide paragraph entities.
+ *   - attributes: HTML attributes for the wrapper element.
+ *   - view_mode: The current view mode string.
+ *   - slides_raw: Array of preprocessed slide data, each with:
+ *     - image_url: Absolute URL of the slide image.
+ *     - image_alt: Alt text for the slide image.
+ *
+ * @see template_preprocess_paragraph()
+ * @see \Drupal\paragraphs\Entity\Paragraph
+ *
+ * @ingroup themeable
+ */
+#}
+{{ attach_library('cingulate/component-symptoms-adhd') }}
+
+<section{{ attributes.addClass('paragraph', 'paragraph--type--symptoms-adhd') }} id="cmp-symptoms-adhd">
+
+  {# Section heading #}
+  {% if content.field_section_heading is not empty %}
+    <h2 class="symptoms__heading">{{ content.field_section_heading }}</h2>
+  {% endif %}
+
+  {# Carousel — only render if there are slides #}
+  {% if slides_raw is not empty %}
+
+    {# Slider wrapper — border + border-radius from CSS; Bootstrap overflow-hidden from utility #}
+    <div class="symptoms__slider-wrap overflow-hidden"
+         role="region"
+         aria-label="{{ 'Symptoms of ADHD infographics slider'|t }}">
+
+      {# Bootstrap Carousel #}
+      <div id="symptomsCarousel"
+           class="carousel slide w-100"
+           data-bs-ride="false"
+           data-bs-wrap="true">
+
+        <div class="carousel-inner">
+          {% for slide in slides_raw %}
+            <div class="carousel-item{% if loop.first %} active{% endif %}">
+              <div class="symptoms__slide">
+                <img
+                  src="{{ slide.image_url }}"
+                  class="img-fluid symptoms__slide-img"
+                  alt="{{ slide.image_alt }}"
+                />
+              </div>
+            </div>
+          {% endfor %}
+        </div>
+      </div>
+
+      {# Prev arrow — overlays the carousel on the left, goes to previous slide #}
+      <button
+        class="symptoms__arrow symptoms__arrow--prev"
+        type="button"
+        data-bs-target="#symptomsCarousel"
+        data-bs-slide="prev"
+        aria-label="{{ 'Previous infographic'|t }}"
+      >
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          width="48"
+          height="48"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          aria-hidden="true"
+        >
+          <circle cx="12" cy="12" r="10" />
+          <path d="M12 8l-4 4 4 4" />
+          <path d="M16 12H8" />
+        </svg>
+      </button>
+
+      {# Next arrow — overlays the carousel on the right, advances to next slide #}
+      <button
+        class="symptoms__arrow symptoms__arrow--next"
+        type="button"
+        data-bs-target="#symptomsCarousel"
+        data-bs-slide="next"
+        aria-label="{{ 'Next infographic'|t }}"
+      >
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          width="48"
+          height="48"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          aria-hidden="true"
+        >
+          <circle cx="12" cy="12" r="10" />
+          <path d="M12 8l4 4-4 4" />
+          <path d="M8 12h8" />
+        </svg>
+      </button>
+    </div>
+
+    {# Pagination dots — wired to carousel via data-bs-* #}
+    <div
+      class="symptoms__pagination d-flex justify-content-center align-items-center mt-4 gap-2"
+      role="tablist"
+      aria-label="{{ 'Infographic slide indicator'|t }}"
+    >
+      {% for slide in slides_raw %}
+        <button
+          class="symptoms__dot{% if loop.first %} active{% endif %}"
+          type="button"
+          role="tab"
+          aria-selected="{{ loop.first ? 'true' : 'false' }}"
+          aria-label="{{ 'Slide @index'|t({'@index': loop.index}) }}"
+          data-bs-target="#symptomsCarousel"
+          data-bs-slide-to="{{ loop.index0 }}"
+        ></button>
+      {% endfor %}
+    </div>
+
+  {% endif %}
+
+</section>

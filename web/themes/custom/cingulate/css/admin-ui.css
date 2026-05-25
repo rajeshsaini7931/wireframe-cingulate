@@ -1,0 +1,158 @@
+/* =============================================================================
+   ADMIN / EDITOR TOOLBAR OVERLAY
+   Scoped to body.toolbar-fixed — the class Drupal toolbar JS adds when the
+   admin toolbar is present. Zero impact on anonymous visitors.
+   Targets: toolbar z-index fix, local tasks, admin actions, page title
+   spacing corrections, and status messages.
+   =============================================================================
+ */
+
+/* ── Top padding when toolbar is present ─────────────────────────────────────
+   Compensate for the fixed toolbar height (39px horizontal / 240px vertical).
+   --------------------------------------------------------------------------- */
+body.toolbar-fixed .l-main,
+body.toolbar-fixed .l-content-top {
+  padding-top: 8px;
+}
+
+/* ── Primary local tasks: View / Edit / Delete / Revisions ───────────────── */
+body.toolbar-fixed #block-cingulate-primary-local-tasks {
+  background: #f5f5f5;
+  border-bottom: 1px solid #ddd;
+  padding: 0 24px;
+}
+
+body.toolbar-fixed #block-cingulate-primary-local-tasks ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  gap: 0;
+}
+
+body.toolbar-fixed #block-cingulate-primary-local-tasks li {
+  margin: 0;
+}
+
+body.toolbar-fixed #block-cingulate-primary-local-tasks a {
+  display: block;
+  padding: 10px 20px;
+  font-size: 13px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: #444;
+  text-decoration: none;
+  border-bottom: 3px solid transparent;
+  transition:
+    color 0.15s,
+    border-color 0.15s;
+}
+
+body.toolbar-fixed #block-cingulate-primary-local-tasks a:hover {
+  color: #002060;
+  border-bottom-color: #002060;
+}
+
+body.toolbar-fixed #block-cingulate-primary-local-tasks a.is-active {
+  color: #002060;
+  border-bottom-color: #002060;
+}
+
+/* ── Secondary local tasks ───────────────────────────────────────────────── */
+body.toolbar-fixed #block-cingulate-secondary-local-tasks {
+  background: #fafafa;
+  border-bottom: 1px solid #e8e8e8;
+  padding: 4px 24px;
+}
+
+body.toolbar-fixed #block-cingulate-secondary-local-tasks ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  gap: 4px;
+}
+
+body.toolbar-fixed #block-cingulate-secondary-local-tasks a {
+  display: block;
+  padding: 6px 14px;
+  font-size: 12px;
+  color: #555;
+  text-decoration: none;
+  border-radius: 3px;
+  transition: background 0.15s;
+}
+
+body.toolbar-fixed #block-cingulate-secondary-local-tasks a:hover,
+body.toolbar-fixed #block-cingulate-secondary-local-tasks a.is-active {
+  background: #e0e7f0;
+  color: #002060;
+}
+
+/* ── Admin action links ───────────────────────────────────────────────────── */
+body.toolbar-fixed #block-cingulate-primary-admin-actions {
+  padding: 8px 24px 0;
+}
+
+body.toolbar-fixed #block-cingulate-primary-admin-actions ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  gap: 8px;
+}
+
+body.toolbar-fixed #block-cingulate-primary-admin-actions a {
+  display: inline-block;
+  padding: 6px 16px;
+  font-size: 12px;
+  font-weight: 600;
+  background: #002060;
+  color: #fff;
+  text-decoration: none;
+  border-radius: 4px;
+  transition: background 0.15s;
+}
+
+body.toolbar-fixed #block-cingulate-primary-admin-actions a:hover {
+  background: #003399;
+}
+
+/* ── Page title area ─────────────────────────────────────────────────────── */
+body.toolbar-fixed #block-cingulate-page-title {
+  padding: 16px 24px 0;
+}
+
+body.toolbar-fixed #block-cingulate-page-title h1 {
+  font-size: 24px;
+  margin-bottom: 0;
+}
+
+/* ── Status / warning / error messages ───────────────────────────────────── */
+body.toolbar-fixed .messages--status {
+  margin: 16px 24px;
+  border-left: 4px solid #2e7d32;
+  background: #f1f8f2;
+  padding: 12px 16px;
+  font-size: 14px;
+  border-radius: 4px;
+}
+
+body.toolbar-fixed .messages--warning {
+  margin: 16px 24px;
+  border-left: 4px solid #f57c00;
+  background: #fff8f0;
+  padding: 12px 16px;
+  font-size: 14px;
+  border-radius: 4px;
+}
+
+body.toolbar-fixed .messages--error {
+  margin: 16px 24px;
+  border-left: 4px solid #c62828;
+  background: #fff1f1;
+  padding: 12px 16px;
+  font-size: 14px;
+  border-radius: 4px;
+}

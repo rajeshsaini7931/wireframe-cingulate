@@ -1,0 +1,35 @@
+{#
+/**
+ * @file
+ * Template for the footer legal navigation menu (menu--footer.html.twig).
+ *
+ * Renders a flat horizontal list of legal links inside the footer.
+ *
+ * Available variables:
+ *   - items: A list of menu items. Each contains:
+ *     - title: Link title.
+ *     - url: Url object — outputs the href string when printed.
+ *     - in_active_trail: TRUE if in the active trail.
+ *   - menu_name: 'footer'.
+ *
+ * @see template_preprocess_menu()
+ *
+ * @ingroup themeable
+ */
+#}
+<ul
+  class="footer__nav-links list-unstyled d-flex align-items-center justify-content-between flex-wrap"
+  role="list"
+>
+  {% for item in items %}
+    <li>
+      <a
+        href="{{ item.url }}"
+        class="footer__nav-link"
+        title="{{ item.title }}"
+        aria-label="{{ item.title }}"
+        {% if item.in_active_trail %}aria-current="page"{% endif %}
+      >{{ item.title }}</a>
+    </li>
+  {% endfor %}
+</ul>

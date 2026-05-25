@@ -1,0 +1,15 @@
+{#
+/**
+ * @file
+ * Strip the block wrapper for the main navigation menu block.
+ *
+ * Outputs only the menu content (rendered via menu--main.html.twig) without
+ * any Drupal block wrapper markup. This allows page.html.twig to control
+ * the exact structure of the <header> element around the nav.
+ *
+ * @see block.html.twig
+ *
+ * @ingroup themeable
+ */
+#}
+{{ content }}

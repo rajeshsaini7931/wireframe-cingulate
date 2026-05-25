@@ -1,0 +1,38 @@
+{#
+/**
+ * @file
+ * Template for the site breadcrumb navigation.
+ *
+ * Matches the wireframe #cmp-breadcrumb design with chevron separators.
+ *
+ * Available variables:
+ *   - breadcrumb: Array of breadcrumb items, each with:
+ *     - text:     The breadcrumb link text.
+ *     - url:      The URL object for the breadcrumb link (empty on current page).
+ *   - attributes: HTML attributes for the <nav> wrapper.
+ *
+ * @see template_preprocess_breadcrumb()
+ *
+ * @ingroup themeable
+ */
+#}
+{% if breadcrumb %}
+  <nav{{ attributes.setAttribute('id', 'cmp-breadcrumb').setAttribute('aria-label', 'Breadcrumb'|t) }}>
+    <ol class="breadcrumb__nav">
+      {% for item in breadcrumb %}
+        <li class="breadcrumb__item">
+          {% if item.url %}
+            <a href="{{ item.url }}" class="breadcrumb__link">{{ item.text }}</a>
+          {% else %}
+            <span class="breadcrumb__current" aria-current="page">{{ item.text }}</span>
+          {% endif %}
+        </li>
+        {% if not loop.last %}
+          <li class="breadcrumb__item" aria-hidden="true">
+            <span class="breadcrumb__separator" aria-hidden="true"></span>
+          </li>
+        {% endif %}
+      {% endfor %}
+    </ol>
+  </nav>
+{% endif %}

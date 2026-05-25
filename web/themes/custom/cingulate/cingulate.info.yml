@@ -1,0 +1,16 @@
+name: Cingulate
+type: theme
+base theme: false
+description: Approach - HTML to Drupal content type and node pages.
+package: Custom
+core_version_requirement: ^10 || ^11
+libraries:
+  - cingulate/global
+
+regions:
+  header: Header
+  content_top: Content Top
+  content: Content
+  content_bottom: Content Bottom
+  footer: Footer
+  modals: Modals

@@ -1,0 +1,165 @@
+{#
+/**
+ * @file
+ * Template for the Resource Materials paragraph (tabbed episodes section).
+ *
+ * Available variables:
+ *   - paragraph: The paragraph entity (resource_materials bundle).
+ *   - content: Render array of the paragraph's fields.
+ *     - content.field_section_heading: Section heading string.
+ *   - attributes: HTML attributes for the wrapper element.
+ *   - resource_groups: Associative array of episode data keyed by category
+ *     machine name (podcasts, videos, newsletter). Each value is an array
+ *     of items with keys:
+ *     - title:     Episode title string.
+ *     - topic:     Topic label string (e.g. "ADHD Topic").
+ *     - duration:  Duration string (e.g. "5 minutes").
+ *     - thumb_url: Absolute URL of the thumbnail image.
+ *     - thumb_alt: Alt text for the thumbnail image.
+ *     - embed_url: Embed URL string for the player modal.
+ *     - nid:       Node ID integer.
+ *
+ * @see template_preprocess_paragraph()
+ * @see cingulate_preprocess_paragraph__resource_materials()
+ *
+ * @ingroup themeable
+ */
+#}
+{{ attach_library('cingulate/component-resource-materials') }}
+
+{#
+  Category card definitions — label, data-category key, SVG icon, description.
+  These are fixed UI elements matching the wireframe design.
+#}
+{% set categories = [
+  {
+    key: 'podcasts',
+    label: 'Podcasts'|t,
+    desc: 'Listen to expert discussions on ADHD management and care.'|t,
+    icon: '<svg xmlns="http://www.w3.org/2000/svg" width="72" height="72" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><line x1="12" x2="12" y1="19" y2="22"/></svg>'
+  },
+  {
+    key: 'videos',
+    label: 'Videos'|t,
+    desc: 'Watch educational video content on ADHD topics and clinical insights.'|t,
+    icon: '<svg xmlns="http://www.w3.org/2000/svg" width="72" height="72" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m22 8-6 4 6 4V8z"/><rect width="14" height="12" x="2" y="6" rx="2" ry="2"/></svg>'
+  },
+  {
+    key: 'newsletter',
+    label: 'Newsletter'|t,
+    desc: 'Stay up to date with the latest ADHD news and research highlights.'|t,
+    icon: '<svg xmlns="http://www.w3.org/2000/svg" width="72" height="72" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7z"/><path d="M14 2v4a2 2 0 0 0 2 2h4"/><path d="M10 9H8"/><path d="M16 13H8"/><path d="M16 17H8"/></svg>'
+  }
+] %}
+
+<section{{ attributes.addClass('paragraph', 'paragraph--type--resource-materials') }} id="cmp-resource-materials">
+
+  {# Section heading #}
+  {% if content.field_section_heading is not empty %}
+    <h2 class="resource__heading">{{ content.field_section_heading }}</h2>
+  {% endif %}
+
+  {# ── Category card row ────────────────────────────────────────────────────── #}
+  <div class="resource__category-row d-flex flex-wrap" role="list">
+    {% for cat in categories %}
+      <div
+        class="resource__category-card d-flex flex-column"
+        data-category="{{ cat.key }}"
+        role="listitem"
+        tabindex="0"
+        aria-pressed="false"
+        aria-label="{{ cat.label ~ ' category' }}"
+      >
+        <div class="resource__card-icon flex-shrink-0">
+          {{ cat.icon|raw }}
+        </div>
+        <div class="resource__card-body">
+          <h3 class="resource__card-title">{{ cat.label }}</h3>
+          <p class="resource__card-desc">{{ cat.desc }}</p>
+        </div>
+      </div>
+    {% endfor %}
+  </div>
+
+  {# ── Episode panels — one per category ────────────────────────────────────── #}
+  {% for cat in categories %}
+    <div
+      class="resource__episodes"
+      data-episodes="{{ cat.key }}"
+      role="region"
+      aria-label="{{ cat.label ~ ' episodes' }}"
+    >
+      {% set items = resource_groups[cat.key] ?? [] %}
+      {% if items is not empty %}
+        {# Group items into rows of 3 #}
+        {% set row_size = 3 %}
+        {% for i in range(0, (items|length - 1) // row_size) %}
+          <div class="resource__episode-row d-flex flex-wrap">
+            {% for item in items|slice(i * row_size, row_size) %}
+              <div class="resource__episode-card d-flex align-items-center"
+                   tabindex="0">
+
+                {# Thumbnail #}
+                <div class="resource__episode-thumb d-flex align-items-center justify-content-center overflow-hidden flex-shrink-0">
+                  {% if item.thumb_url is not empty %}
+                    <img
+                      src="{{ item.thumb_url }}"
+                      class="img-fluid"
+                      alt="{{ item.thumb_alt }}"
+                      loading="lazy"
+                    />
+                  {% endif %}
+                </div>
+
+                {# Info #}
+                <div class="resource__episode-info d-flex flex-column justify-content-between">
+                  <p class="resource__episode-title">{{ item.title }}</p>
+                  {% if item.topic is not empty %}
+                    <p class="resource__episode-topic">{{ item.topic }}</p>
+                  {% endif %}
+                  {% if item.duration is not empty %}
+                    <div class="resource__episode-meta d-flex align-items-center">
+                      <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20"
+                           viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                           stroke-width="2" stroke-linecap="round"
+                           stroke-linejoin="round" aria-hidden="true">
+                        <circle cx="12" cy="12" r="10"/>
+                        <polyline points="12 6 12 12 16 14"/>
+                      </svg>
+                      <span>{{ item.duration }}</span>
+                    </div>
+                  {% endif %}
+                </div>
+
+                {# Play button — triggers player modal #}
+                <button
+                  class="resource__episode-play d-flex align-items-center justify-content-end flex-shrink-0"
+                  type="button"
+                  data-bs-toggle="modal"
+                  data-bs-target="#player-modal"
+                  data-embed-url="{{ item.embed_url }}"
+                  data-track-title="{{ item.title }}"
+                  data-track-topic="{{ item.topic }}"
+                  data-transcript="{{ item.transcript|e }}"
+                  aria-label="{{ 'Play @title'|t({'@title': item.title}) }}"
+                >
+                  <svg xmlns="http://www.w3.org/2000/svg" width="100" height="100"
+                       viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                       stroke-width="1.5" stroke-linecap="round"
+                       stroke-linejoin="round" aria-hidden="true">
+                    <circle cx="12" cy="12" r="10"/>
+                    <polygon points="10 8 16 12 10 16 10 8"/>
+                  </svg>
+                </button>
+
+              </div>
+            {% endfor %}
+          </div>
+        {% endfor %}
+      {% else %}
+        <p class="resource__empty">{{ 'No items available in this category.'|t }}</p>
+      {% endif %}
+    </div>
+  {% endfor %}
+
+</section>

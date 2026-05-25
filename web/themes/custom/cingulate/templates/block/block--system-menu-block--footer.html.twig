@@ -1,0 +1,15 @@
+{#
+/**
+ * @file
+ * Strip the block wrapper for the footer navigation menu block.
+ *
+ * Outputs only the menu content (rendered via menu--footer.html.twig) without
+ * any Drupal block wrapper markup. This allows page.html.twig to control
+ * the exact footer structure around the nav element.
+ *
+ * @see block.html.twig
+ *
+ * @ingroup themeable
+ */
+#}
+{{ content }}

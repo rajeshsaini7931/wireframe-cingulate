@@ -1,0 +1,28 @@
+{#
+/**
+ * @file
+ * Template for an individual Symptoms Slide paragraph.
+ *
+ * This paragraph is embedded inside paragraph--symptoms-adhd.html.twig via the
+ * field_slides entity_reference_revisions field. The parent template preprocesses
+ * all slides into the slides_raw array and renders them in a Bootstrap Carousel,
+ * so this template is used only when Drupal renders the field directly (e.g. in
+ * the Paragraphs edit summary or admin preview).
+ *
+ * Available variables:
+ *   - content: A render array of the paragraph's fields.
+ *   - paragraph: The paragraph entity.
+ *   - attributes: HTML attributes for the wrapper.
+ *   - view_mode: The current view mode string.
+ *
+ * @see template_preprocess_paragraph()
+ * @see \Drupal\paragraphs\Entity\Paragraph
+ *
+ * @ingroup themeable
+ */
+#}
+<div{{ attributes.addClass('symptoms-slide') }}>
+  {% if content.field_slide_image is not empty %}
+    {{ content.field_slide_image }}
+  {% endif %}
+</div>

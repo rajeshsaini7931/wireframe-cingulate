@@ -1,0 +1,37 @@
+{#
+/**
+ * @file
+ * Template for the content_block paragraph type.
+ *
+ * Renders a single heading + rich text body section used on secondary pages
+ * (Definition, Classification, etc.).
+ *
+ * Available variables:
+ *   - paragraph:  The content_block paragraph entity.
+ *   - content:    Render array of the paragraph's fields:
+ *     - content.field_content_heading: Section heading string.
+ *     - content.field_content_body:    Rich text body (text_long).
+ *   - attributes: HTML attributes for the wrapper element.
+ *   - view_mode:  Current view mode string.
+ *
+ * @see template_preprocess_paragraph()
+ * @see cingulate_preprocess_paragraph__content_block()
+ *
+ * @ingroup themeable
+ */
+#}
+{{ attach_library('cingulate/component-content-block') }}
+
+<section{{ attributes.addClass('paragraph', 'paragraph--type--content-block', 'content-block') }}>
+
+  {% if content.field_content_heading is not empty %}
+    <h2 class="content-block__heading">{{ content.field_content_heading }}</h2>
+  {% endif %}
+
+  {% if content.field_content_body is not empty %}
+    <div class="content-block__text">
+      {{ content.field_content_body }}
+    </div>
+  {% endif %}
+
+</section>

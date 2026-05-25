@@ -1,0 +1,216 @@
+# ============================================================================
+# Drupal 11 Composer Project - .gitignore
+# ============================================================================
+#
+# Best Practices:
+# - Track: composer.json, composer.lock, custom code, configuration
+# - Ignore: vendor/, contributed modules/themes, user uploads, sensitive config
+# - DDEV manages its own .gitignore files in .ddev/ and web/sites/default/
+# ============================================================================
+
+# ── Composer Dependencies (managed via composer.json) ──────────────────────
+/vendor/
+/web/core/
+/web/modules/contrib/
+/web/themes/contrib/
+/web/profiles/contrib/
+/web/libraries/
+/drush/Commands/contrib/
+
+# ── User-Generated Content ──────────────────────────────────────────────────
+/web/sites/*/files/
+/web/sites/*/private/
+
+# Keep directory structure with .htaccess files
+!/web/sites/*/files/.htaccess
+!/web/sites/*/private/.htaccess
+
+# ── Sensitive Configuration Files ──────────────────────────────────────────
+# Ignore all settings and services files (contain DB credentials, secrets)
+/web/sites/*/settings*.php
+/web/sites/*/services*.yml
+
+# Note: settings.ddev.php is managed by DDEV's own .gitignore in web/sites/default/
+# To track it, you'd need to modify that file, but DDEV regenerates it automatically
+
+# ── Drupal Core & Scaffold ──────────────────────────────────────────────────
+/web/.csslintrc
+/web/.editorconfig
+/web/.eslintignore
+/web/.eslintrc.json
+/web/.ht.router.php
+/web/.htaccess
+/web/autoload.php
+/web/index.php
+/web/robots.txt
+/web/update.php
+/web/web.config
+/web/INSTALL.txt
+/web/README.md
+
+# ── Multi-Site Test Environment ─────────────────────────────────────────────
+/web/sites/simpletest/
+
+# ── Configuration Sync Directory ───────────────────────────────────────────
+# Drupal configuration should be tracked for deployment
+# Uncomment to track the config/sync directory when you export config:
+# !/config/sync/
+# !/config/sync/**/*.yml
+
+# ── DDEV Local Development Environment ─────────────────────────────────────
+# DDEV has its own .gitignore at .ddev/.gitignore that handles most ignores
+# We only need to ensure the main config.yaml is tracked
+
+# Ignore DDEV runtime and build artifacts
+/.ddev/.homeadditions/
+/.ddev/.ddev-docker-compose-*.yaml
+/.ddev/.dbimageBuild/
+/.ddev/.webimageBuild/
+/.ddev/db-build/
+/.ddev/db_snapshots/
+/.ddev/mutagen/
+/.ddev/config.*.yaml
+/.ddev/commands/host/launch
+/.ddev/commands/*/launch
+
+# Track DDEV base configuration for team sharing
+!/.ddev/config.yaml
+!/.ddev/commands/
+
+# ── Node / NPM ──────────────────────────────────────────────────────────────
+node_modules/
+npm-debug.log
+yarn-error.log
+package-lock.json
+yarn.lock
+
+# Theme-specific build artifacts
+/web/themes/custom/*/node_modules/
+/web/themes/custom/*/dist/
+/web/themes/custom/*/build/
+
+# ── macOS ───────────────────────────────────────────────────────────────────
+.DS_Store
+.AppleDouble
+.LSOverride
+._*
+
+# ── Linux ───────────────────────────────────────────────────────────────────
+*~
+.directory
+.Trash-*
+
+# ── Windows ─────────────────────────────────────────────────────────────────
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+$RECYCLE.BIN/
+*.lnk
+
+# ── IDEs & Editors ──────────────────────────────────────────────────────────
+# PHPStorm / IntelliJ
+.idea/
+*.iml
+
+# VS Code
+.vscode/
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+
+# Sublime
+*.sublime-project
+*.sublime-workspace
+
+# NetBeans
+nbproject/
+
+# Eclipse
+.project
+.buildpath
+.settings/
+
+# Vim
+*.swp
+*.swo
+*~
+
+# Emacs
+\#*\#
+.\#*
+
+# ── Logs & Temporary Files ──────────────────────────────────────────────────
+*.log
+*.sql
+*.sqlite
+.sass-cache/
+*.css.map
+*.js.map
+
+# ── Database Dumps ──────────────────────────────────────────────────────────
+*.sql.gz
+*.mysql
+*.dump
+
+# ── Backup Files ────────────────────────────────────────────────────────────
+*.bak
+*.backup
+*.old
+*.orig
+*~
+
+# ── Drupal-Specific ─────────────────────────────────────────────────────────
+# Ignore temporary files
+*.tmp
+*.temp
+
+# Ignore Drupal's simpletest write directory
+/web/sites/simpletest/
+
+# Ignore Twig cache
+/web/sites/*/files/php/twig/
+
+# ── PHPUnit & Testing ───────────────────────────────────────────────────────
+/web/sites/simpletest/
+.phpunit.result.cache
+phpunit.xml
+!phpunit.xml.dist
+
+# ── Composer ────────────────────────────────────────────────────────────────
+composer.lock.local
+auth.json
+
+# Keep composer.lock for reproducible builds
+!/composer.lock
+
+# ── Recipes ─────────────────────────────────────────────────────────────────
+# Drupal recipes are unpacked to the recipes/ directory
+# Uncomment to ignore them:
+# /recipes/
+
+# ── Custom Exclusions ───────────────────────────────────────────────────────
+# Add project-specific ignores below:
+
+# Ignore setup scripts output or temporary files
+# /setup-scripts/*.log
+
+# Ignore media library imports directory (if using local asset storage)
+# /project-assets/
+
+# ── Force Include Important Files ───────────────────────────────────────────
+# Ensure custom code is always tracked
+!/web/modules/custom/
+!/web/themes/custom/
+!/web/profiles/custom/
+
+# Keep directory structure markers
+!.gitkeep
+
+# Track root-level Drupal/Composer project files
+!/.editorconfig
+!/.gitattributes
+
+# Track Drupal recipes (if using)
+!/recipes/
+!/recipes/**/*.yml

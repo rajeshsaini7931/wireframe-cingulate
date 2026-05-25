@@ -1,0 +1,8 @@
+# Schema for the configuration files of the Cingulate theme.
+cingulate.settings:
+  type: theme_settings
+  label: 'Cingulate settings'
+  mapping:
+    example:
+      type: string
+      label: Example

@@ -1,0 +1,70 @@
+# Main theme library.
+global:
+  js:
+    js/bootstrap.bundle.min.js: {}
+    js/cingulate.js: {}
+  css:
+    theme:
+      css/bootstrap.min.css: {}
+      css/cingulate.css: {}
+      css/admin-ui.css: {}
+  dependencies:
+    - core/drupal
+    - core/once
+
+# Symptoms of ADHD carousel section.
+component-symptoms-adhd:
+  version: VERSION
+  css:
+    component:
+      css/components/symptoms-adhd.css: {}
+  js:
+    js/symptoms-adhd.js: {}
+  dependencies:
+    - cingulate/global
+    - core/once
+
+# Player modal — episode video player, transcript accordion.
+component-player-modal:
+  version: VERSION
+  css:
+    component:
+      css/components/player-modal.css: {}
+  js:
+    js/player-modal.js: {}
+  dependencies:
+    - cingulate/global
+    - core/once
+
+# Register Modal — auto-show on page load, cookie suppression after submission.
+component-register-modal:
+  version: VERSION
+  css:
+    component:
+      css/components/register-modal.css: {}
+  js:
+    js/register-modal.js: {}
+  dependencies:
+    - cingulate/global
+    - core/once
+
+# Resource Materials tabbed section.
+component-resource-materials:
+  version: VERSION
+  css:
+    component:
+      css/components/resource-materials.css: {}
+  js:
+    js/resource-materials.js: {}
+  dependencies:
+    - cingulate/global
+    - core/once
+
+# Content Block — heading + rich text body for secondary pages.
+component-content-block:
+  version: VERSION
+  css:
+    component:
+      css/components/content-block.css: {}
+  dependencies:
+    - cingulate/global

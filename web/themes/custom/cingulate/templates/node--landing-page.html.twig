@@ -1,0 +1,46 @@
+{#
+/**
+ * @file
+ * Template for Landing Page nodes.
+ *
+ * Available variables:
+ *   - content: All node content prepared for rendering.
+ *   - content.field_content_sections: Paragraph sections
+ *   - breadcrumb: Breadcrumb navigation
+ *
+ * Structure:
+ *   - If first paragraph is secondary_hero, render it outside content-area
+ *   - Wrap remaining sections in content-area with breadcrumb
+ *
+ * @see template_preprocess_node()
+ *
+ * @ingroup themeable
+ */
+#}
+
+{% set paragraphs = content.field_content_sections['#items'] %}
+{% set has_secondary_hero = paragraphs[0] and paragraphs[0].entity.bundle == 'secondary_hero' %}
+
+<main id="main-content">
+  {% if has_secondary_hero %}
+    {# Render secondary hero outside content-area #}
+    {{ content.field_content_sections[0] }}
+    
+    {# Content Area with breadcrumb + remaining sections #}
+    <div class="content-area">
+      {% if breadcrumb is not empty %}
+        {{ breadcrumb }}
+      {% endif %}
+      
+      {# Render remaining paragraphs (starting from index 1) #}
+      {% for key, item in content.field_content_sections %}
+        {% if key matches '/^\\d+$/' and key > 0 %}
+          {{ item }}
+        {% endif %}
+      {% endfor %}
+    </div>
+  {% else %}
+    {# No secondary hero, render all paragraphs normally (Home page) #}
+    {{ content.field_content_sections }}
+  {% endif %}
+</main>

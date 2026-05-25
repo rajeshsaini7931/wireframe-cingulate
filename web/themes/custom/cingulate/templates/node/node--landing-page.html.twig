@@ -1,0 +1,60 @@
+{#
+/**
+ * @file
+ * Theme override for landing page nodes.
+ *
+ * For Register page and other internal pages with secondary hero + content area.
+ *
+ * @see template_preprocess_node()
+ *
+ * @ingroup themeable
+ */
+#}
+
+<main id="main-content">
+  {% if content.field_content_sections %}
+    {% set has_secondary_hero = false %}
+    {% set secondary_hero_content = null %}
+    {% set other_sections = [] %}
+    
+    {# Separate secondary_hero from other sections #}
+    {% for key, item in content.field_content_sections if key|first != '#' %}
+      {% if item['#paragraph'] and item['#paragraph'].bundle() == 'secondary_hero' %}
+        {% set has_secondary_hero = true %}
+        {% set secondary_hero_content = item %}
+      {% else %}
+        {% set other_sections = other_sections|merge([item]) %}
+      {% endif %}
+    {% endfor %}
+    
+    {# Render secondary hero outside .content-area #}
+    {% if has_secondary_hero and secondary_hero_content %}
+      {{ secondary_hero_content }}
+    {% endif %}
+    
+    {# Wrap breadcrumb + remaining sections + webform in .content-area #}
+    {% if has_secondary_hero %}
+      <div id="cmp-content-area" class="content-area">
+        {# Breadcrumb #}
+        {{ drupal_block('system_breadcrumb_block') }}
+        
+        {# Webform section with title/subtitle wrapper #}
+        {% if content.field_webform is not empty %}
+          <section id="cmp-register-form" class="reg-form-section" aria-labelledby="reg-form-heading">
+            <h2 id="reg-form-heading" class="inner-pg-section__title">Stay Informed on ADHD</h2>
+            <p class="reg-form-section__sub">Register to receive the latest updates, research, &amp; resources</p>
+            {{ content.field_webform }}
+          </section>
+        {% endif %}
+        
+        {# Other paragraph sections #}
+        {% for section in other_sections %}
+          {{ section }}
+        {% endfor %}
+      </div>
+    {% else %}
+      {# No secondary hero - render all sections normally (homepage) #}
+      {{ content.field_content_sections }}
+    {% endif %}
+  {% endif %}
+</main>

@@ -1,0 +1,275 @@
+/**
+ * @file
+ * Registration Form Component Styles.
+ *
+ * Extracted from project/dist/main.css lines 2018-2350+
+ */
+
+.reg-form-section {
+  padding: 60px 88px 80px;
+  max-width: 720px;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.inner-pg-section__title {
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 32px;
+  font-weight: 700;
+  line-height: 1.25;
+  color: #333333;
+  margin: 0;
+}
+
+.reg-form-section__sub {
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 18px;
+  font-weight: 400;
+  line-height: 1.556;
+  color: #333333;
+  margin: 0 0 32px;
+}
+
+.reg-form {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  width: 100%;
+}
+
+.reg-form__row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+}
+
+.reg-form__field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.reg-form__label {
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 16px;
+  font-weight: 700;
+  color: #333333;
+  margin: 0;
+}
+
+.reg-form__req {
+  color: #c0392b;
+  margin-left: 2px;
+}
+
+.reg-form__sub-label {
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 14px;
+  font-weight: 400;
+  color: #999999;
+  margin: 0;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  flex-wrap: wrap;
+}
+
+.webform-cta-button.npi-lookup-button {
+  background: none;
+  border: none;
+  padding: 0;
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 14px;
+  font-weight: 700;
+  color: #525252;
+  text-decoration: underline;
+  cursor: pointer;
+}
+.webform-cta-button.npi-lookup-button:hover {
+  color: rgb(56.5, 56.5, 56.5);
+}
+.webform-cta-button.npi-lookup-button:focus {
+  outline: 2px solid #525252;
+  outline-offset: 2px;
+  border-radius: 2px;
+}
+
+.reg-form__input {
+  width: 100%;
+  padding: 10px 16px;
+  border: 1px solid #999999;
+  border-radius: 4px;
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 1.556;
+  color: #000000;
+  background: #ffffff;
+  outline: none;
+  transition:
+    border-color 0.15s ease,
+    box-shadow 0.15s ease;
+}
+.reg-form__input::placeholder {
+  color: #999999;
+}
+.reg-form__input:focus {
+  border-color: #525252;
+  box-shadow: 0 0 0 2px rgba(82, 82, 82, 0.15);
+}
+.reg-form__input:invalid:not(:placeholder-shown) {
+  border-color: #c0392b;
+}
+
+.reg-form__error {
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 13px;
+  color: #c0392b;
+  min-height: 18px;
+  display: block;
+}
+
+.reg-form__legal-para {
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 14px;
+  line-height: 1.6;
+  color: #999999;
+  margin: 4px 0 0;
+}
+
+.reg-form__submit {
+  align-self: flex-start;
+  padding: 12px 48px;
+  background: #525252;
+  color: #ffffff;
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 18px;
+  font-weight: 700;
+  line-height: 1.556;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+.reg-form__submit:hover {
+  background: rgb(61.6, 61.6, 61.6);
+}
+.reg-form__submit:focus {
+  outline: 2px solid #000000;
+  outline-offset: 2px;
+}
+.reg-form__submit:active {
+  background: rgb(46.3, 46.3, 46.3);
+}
+
+/* Responsive styles */
+@media (max-width: 820px) {
+  .reg-form-section {
+    padding: 48px 64px;
+  }
+}
+
+@media (max-width: 600px) {
+  .reg-form-section {
+    padding: 40px 24px;
+  }
+
+  .inner-pg-section__title {
+    font-size: 28px;
+  }
+
+  .reg-form-section__sub {
+    font-size: 16px;
+    margin-bottom: 24px;
+  }
+
+  .reg-form__row {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+}
+
+@media (max-width: 384px) {
+  .reg-form-section {
+    padding: 32px 16px;
+  }
+
+  .inner-pg-section__title {
+    font-size: 24px;
+  }
+
+  .reg-form-section__sub {
+    font-size: 15px;
+  }
+}
+
+/* ── Webform Confirmation Message ─────────────────────────────────── */
+.webform-confirmation {
+  padding: 40px;
+  background-color: #f0f9ff;
+  border: 2px solid #0ea5e9;
+  border-radius: 8px;
+  margin-bottom: 32px;
+}
+
+.webform-confirmation p {
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 18px;
+  font-weight: 400;
+  line-height: 1.6;
+  color: #333333;
+  margin: 0;
+}
+
+.webform-confirmation p:first-child {
+  font-size: 24px;
+  font-weight: 700;
+  color: #0284c7;
+  margin-bottom: 16px;
+}
+
+/* Hide the form after successful submission when using inline confirmation */
+.webform-confirmation + form {
+  display: none;
+}
+
+@media (max-width: 600px) {
+  .webform-confirmation {
+    padding: 24px;
+  }
+
+  .webform-confirmation p {
+    font-size: 16px;
+  }
+
+  .webform-confirmation p:first-child {
+    font-size: 20px;
+  }
+}
+
+/* ── Client-Side Validation Error Styles ─────────────────────────── */
+
+/* jQuery Validate injects error labels with class="error" */
+label.error {
+  color: #c0392b;
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 13px;
+  font-weight: 400;
+  display: block;
+  margin-top: 4px;
+  cursor: default;
+}
+
+/* Error state for input fields */
+.reg-form__input.error {
+  border-color: #c0392b;
+  box-shadow: 0 0 0 2px rgba(192, 57, 43, 0.15);
+}
+
+/* Suppress browser :invalid ring - jQuery Validate handles error display */
+input:invalid {
+  outline: none;
+  box-shadow: none;
+}

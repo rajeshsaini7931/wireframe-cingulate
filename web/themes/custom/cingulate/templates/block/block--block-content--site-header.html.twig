@@ -1,64 +1,59 @@
 {#
 /**
  * @file
- * Template for the site_header block content type.
+ * Template for the Site Header block_content block.
  *
- * Activated by Drupal's template suggestion:
- *   block--block-content--site-header.html.twig
+ * Available variables (provided by cingulate_blocks_preprocess_block):
+ *   - hcp_notice: String from field_hcp_notice.
+ *   - site_name: String from field_site_name or system config fallback.
+ *   - header_logo_url: Resolved absolute URL for header logo image (optional).
+ *   - header_logo_alt: Alt text for header logo (optional).
+ *   - register_cta_url: URL for register CTA link.
+ *   - register_cta_title: Button text for register CTA.
+ *   - menu_tree: Render array of the main navigation menu tree.
  *
- * Variables injected by cingulate_blocks_preprocess_block():
- *   - utility_text: Utility bar message string.
- *   - site_name: Site name from system.site config.
- *   - header_logo_url: Absolute URL of the header logo image (empty if not set).
- *   - header_logo_alt: Alt text for the header logo.
- *   - menu_tree: Header navigation menu render array (theme: menu__cingulate_header).
- *
- * @see \Drupal\block_content\Entity\BlockContent
  * @see cingulate_blocks_preprocess_block()
- * @see menu--cingulate-header.html.twig
+ * @see _cingulate_blocks_preprocess_header()
  *
  * @ingroup themeable
  */
 #}
+{{ attach_library('cingulate/component-nav') }}
 
-<header id="cmp-header" role="banner">
-
-  {# Utility Bar #}
-  {% if utility_text is not empty %}
-    <div class="header__utility-bar">
-      <p>{{ utility_text }}</p>
+<header id="cmp-nav" role="banner">
+  {# HCP Notice Bar #}
+  {% if hcp_notice is not empty %}
+    <div class="nav__hcp-bar">
+      <p>{{ hcp_notice }}</p>
     </div>
   {% endif %}
 
-  {# Main Navigation #}
-  <nav class="header__nav navbar navbar-expand-xl" aria-label="{{ 'Main navigation'|t }}">
-    <div class="container-fluid px-0 align-items-center w-100">
+  {# Main Navigation Row #}
+  <nav class="navbar navbar-expand-xl nav__main" aria-label="{{ 'Main navigation'|t }}">
+    <div class="nav__left">
+      {# Logo or Site Name #}
+      {% if header_logo_url is not empty %}
+        <a href="/" class="nav__logo" aria-label="{{ site_name }} {{ 'home'|t }}">
+          <img src="{{ header_logo_url }}" alt="{{ header_logo_alt }}" class="nav__logo-img" />
+        </a>
+      {% else %}
+        <a href="/" class="nav__logo" aria-label="{{ site_name }} {{ 'home'|t }}">{{ site_name }}</a>
+      {% endif %}
 
-      {# Logo — image from Media Library if uploaded, otherwise site name text #}
-      <a
-        href="{{ path('<front>') }}"
-        class="header__logo flex-shrink-0 text-nowrap"
-        aria-label="{{ site_name }} {{ 'home'|t }}"
-      >
-        {% if header_logo_url is not empty %}
-          <img
-            src="{{ header_logo_url }}"
-            alt="{{ header_logo_alt is not empty ? header_logo_alt : site_name }}"
-            class="header__logo-img"
-          />
-        {% else %}
-          {{ site_name }}
-        {% endif %}
-      </a>
+      {# Divider #}
+      <div class="nav__divider" aria-hidden="true"></div>
 
-      {# Vertical divider (desktop only) #}
-      <span class="header__divider d-none d-xl-block flex-shrink-0" aria-hidden="true"></span>
-
-      {# Nav items + register CTA + hamburger + mobile collapse
-         All rendered via menu--cingulate-header.html.twig #}
-      {{ menu_tree }}
-
+      {# Main Menu Tree #}
+      {% if menu_tree is not empty %}
+        {{ menu_tree }}
+      {% endif %}
     </div>
-  </nav>
 
+    {# Register CTA Button #}
+    {% if register_cta_url is not empty %}
+      <a href="{{ register_cta_url }}" class="nav__register">
+        {{ register_cta_title|default('Register') }}
+      </a>
+    {% endif %}
+  </nav>
 </header>

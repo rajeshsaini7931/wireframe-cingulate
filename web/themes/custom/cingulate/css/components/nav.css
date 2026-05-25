@@ -1,0 +1,211 @@
+/**
+ * @file
+ * Navigation component styles for site header.
+ */
+
+#cmp-nav {
+  font-family: Arial, Helvetica, sans-serif;
+  background: #ffffff;
+  border-bottom: 1px solid #cccccc;
+  position: sticky;
+  top: 0;
+  z-index: 500; /* Below Drupal toolbar (502) — allows admin dropdowns to float above */
+}
+
+/* ── HCP Notice Bar ─────────────────────────────────────────────────────── */
+.nav__hcp-bar {
+  padding: 9px 88px;
+  border-bottom: 1px solid #cccccc;
+}
+
+.nav__hcp-bar p {
+  font-size: 18px;
+  line-height: 1.667;
+  margin: 0;
+  color: #000000;
+}
+
+/* ── Main Nav Row ─────────────────────────────────────────────────────────── */
+.nav__main {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 88px;
+  gap: 0;
+}
+
+/* ── Left group: logo + divider + links ───────────────────────────────────── */
+.nav__left {
+  display: flex;
+  align-items: center;
+  gap: 60px;
+  flex: 1;
+}
+
+.nav__logo {
+  font-size: 40px;
+  font-weight: 700;
+  line-height: 1;
+  color: #000000;
+  white-space: nowrap;
+  text-decoration: none;
+}
+
+.nav__logo:hover {
+  text-decoration: none;
+  color: #000000;
+}
+
+.nav__divider {
+  width: 1px;
+  height: 60px;
+  background: #000000;
+  flex-shrink: 0;
+}
+
+/* ── Nav links ────────────────────────────────────────────────────────────── */
+.nav__links {
+  display: flex;
+  align-items: center;
+  gap: 120px;
+  list-style: none;
+  margin: 0;
+  padding: 0 24px;
+}
+
+.nav__item {
+  position: relative;
+}
+
+.nav__item.has-dropdown > .nav__link {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+/* Dropdown submenu */
+.nav__dropdown {
+  display: none;
+  position: absolute;
+  top: calc(100% + 8px);
+  left: 0;
+  background: #ffffff;
+  border: none;
+  border-radius: 4px;
+  min-width: 260px;
+  list-style: none;
+  padding: 12px;
+  margin: 0;
+  box-shadow: 0 4px 7px rgba(0, 0, 0, 0.16);
+  z-index: 1100;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.nav__dropdown.is-open {
+  display: flex;
+}
+
+/* CSS hover fallback — shows dropdown on :hover even without JS */
+.nav__item.has-dropdown:hover > .nav__dropdown {
+  display: flex;
+}
+
+.nav__dropdown li {
+  width: 100%;
+}
+
+.nav__dropdown li + li {
+  border-top: 1px solid #cccccc;
+}
+
+.nav__dropdown li a {
+  display: block;
+  padding: 8px 0;
+  font-size: 18px;
+  font-weight: 700;
+  line-height: 1.556;
+  color: #333333;
+  white-space: nowrap;
+  text-decoration: none;
+}
+
+.nav__dropdown li a:hover {
+  color: #000000;
+  text-decoration: underline;
+}
+
+/* Active open state — button gets #d9d9d9 bg + chevron flips up */
+.nav__item.is-open > .nav__link {
+  background: #d9d9d9;
+  border-radius: 4px;
+  padding: 4px 8px;
+}
+
+.nav__item.is-open > .nav__link .nav__chevron {
+  transform: rotate(180deg);
+}
+
+.nav__link {
+  font-size: 20px;
+  line-height: 1.5;
+  font-weight: 400;
+  color: #000000;
+  white-space: nowrap;
+  text-decoration: none;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+}
+
+.nav__link:hover {
+  color: #1a1a1a;
+  text-decoration: none;
+}
+
+.nav__chevron {
+  width: 20px;
+  height: 20px;
+  flex-shrink: 0;
+}
+
+/* ── Register Button ──────────────────────────────────────────────────────── */
+.nav__register {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 12px 32px;
+  background: #525252;
+  color: #ffffff;
+  font-size: 18px;
+  font-weight: 700;
+  line-height: 1.556;
+  border-radius: 8px;
+  text-decoration: none;
+  white-space: nowrap;
+  border: none;
+  cursor: pointer;
+  flex-shrink: 0;
+  transition: background 0.2s ease;
+}
+
+.nav__register:hover {
+  background: #3d3d3d;
+  color: #ffffff;
+  text-decoration: none;
+}
+
+.nav__register:focus {
+  outline: 2px solid #000000;
+  outline-offset: 2px;
+}
+
+/* ── Responsive ───────────────────────────────────────────────────────────── */
+@media (min-width: 1920px) {
+  .nav__hcp-bar,
+  .nav__main {
+    padding-left: clamp(88px, 5vw, 120px);
+    padding-right: clamp(88px, 5vw, 120px);
+  }
+}

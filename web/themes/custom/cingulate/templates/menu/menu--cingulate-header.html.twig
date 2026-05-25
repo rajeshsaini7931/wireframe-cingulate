@@ -3,53 +3,45 @@
  * @file
  * Template for the Cingulate site header navigation menu.
  *
- * Used exclusively by CingulateSiteHeaderBlock. The #theme key on the menu
- * render array is set to 'menu__cingulate_header' in the block's build()
- * method, so this template is used regardless of which menu machine name is
- * selected in Admin → Configuration → System → Cingulate Site Settings.
- *
- * Renders three zones inside the navbar container-fluid:
- *   1. Desktop nav — ul.header__nav-items (hidden on mobile via d-none d-xl-flex)
- *   2. Right group — Register CTA button + hamburger toggler
- *   3. Mobile collapse — #mobileNav with accordion sub-menus
+ * Renders main navigation with dropdown support.
  *
  * Available variables:
  *   - items: A nested list of menu items. Each item contains:
- *     - title: Menu link title (TranslatableMarkup — safe to output).
- *     - url: Url object — outputs the href string when printed.
- *     - below: Array of child menu items (same structure, one level deep).
- *     - in_active_trail: TRUE if the item is in the active trail.
- *     - attributes: HTML attributes for the list item element.
- *   - menu_name: The machine name of the currently configured menu.
+ *     - title: Menu link title (TranslatableMarkup).
+ *     - url: Url object.
+ *     - below: Array of child menu items.
+ *     - in_active_trail: TRUE if item is in active trail.
+ *   - menu_name: The machine name of the menu.
  *
- * @see \Drupal\cingulate_blocks\Plugin\Block\CingulateSiteHeaderBlock
+ * @see cingulate_blocks_preprocess_block()
  * @see template_preprocess_menu()
  *
  * @ingroup themeable
  */
 #}
 
-{# ── Desktop nav items (hidden on tablet/mobile, shown on xl+) ─────────────── #}
-<ul class="header__nav-items d-none d-xl-flex list-unstyled" role="list">
+<ul class="nav__links" role="list">
   {% for item in items %}
-    <li class="header__nav-item{% if item.below %} has-dropdown{% endif %}{% if item.in_active_trail %} is-active-trail{% endif %}">
+    <li class="nav__item{% if item.below %} has-dropdown{% endif %}{% if item.in_active_trail %} is-active-trail{% endif %}">
 
       {% if item.below %}
-        {# Parent item — render as button (no navigation, opens dropdown) #}
+        {# Parent item — button with dropdown #}
         <button
-          class="header__nav-link"
+          class="nav__link"
           type="button"
           aria-haspopup="true"
           aria-expanded="false"
           aria-controls="dropdown-{{ item.title|clean_class }}"
         >
           {{ item.title }}
-          <span class="header__chevron" aria-hidden="true"></span>
+          <svg class="nav__chevron" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <polyline points="6 9 12 15 18 9"/>
+          </svg>
         </button>
 
-        {# Dropdown panel #}
+        {# Dropdown submenu #}
         <ul
-          class="header__dropdown list-unstyled"
+          class="nav__dropdown"
           id="dropdown-{{ item.title|clean_class }}"
           role="menu"
           aria-label="{{ item.title }} submenu"
@@ -58,10 +50,7 @@
             <li role="none">
               <a
                 href="{{ sub.url }}"
-                class="header__dropdown-link{% if sub.in_active_trail %} header__dropdown-link--active{% endif %}"
                 role="menuitem"
-                title="{{ sub.title }}"
-                aria-label="{{ sub.title }}"
                 {% if sub.in_active_trail %}aria-current="page"{% endif %}
               >{{ sub.title }}</a>
             </li>
@@ -69,10 +58,10 @@
         </ul>
 
       {% else %}
-        {# Leaf item — render as regular link #}
+        {# Leaf item — direct link #}
         <a
           href="{{ item.url }}"
-          class="header__nav-link{% if item.in_active_trail %} is-active{% endif %}"
+          class="nav__link{% if item.in_active_trail %} is-active{% endif %}"
           {% if item.in_active_trail %}aria-current="page"{% endif %}
         >
           {{ item.title }}
@@ -82,86 +71,3 @@
     </li>
   {% endfor %}
 </ul>
-
-{# ── Right group: Register CTA + Hamburger toggle ─────────────────────────── #}
-<div class="d-flex align-items-center gap-3 ms-auto">
-  <a
-    class="header__register-btn flex-shrink-0 text-nowrap"
-    href="#register-modal"
-    role="button"
-    data-bs-toggle="modal"
-    data-bs-target="#register-modal"
-    aria-label="{{ 'Register for updates'|t }}"
-  >
-    {{ 'Register'|t }}
-  </a>
-
-  <button
-    class="header__toggler navbar-toggler d-xl-none"
-    type="button"
-    data-bs-toggle="collapse"
-    data-bs-target="#mobileNav"
-    aria-controls="mobileNav"
-    aria-expanded="false"
-    aria-label="{{ 'Toggle navigation'|t }}"
-  >
-    <span class="navbar-toggler-icon"></span>
-  </button>
-</div>
-
-{# ── Mobile nav collapse ──────────────────────────────────────────────────── #}
-<div class="collapse navbar-collapse w-100" id="mobileNav">
-  <div class="header__collapse-inner">
-    <ul class="header__mobile-nav-items list-unstyled" role="list">
-
-      {% for item in items %}
-        <li class="header__mobile-nav-item{% if item.in_active_trail %} is-active-trail{% endif %}">
-
-          {% if item.below %}
-            <button
-              class="header__mobile-nav-link"
-              type="button"
-              aria-haspopup="true"
-              aria-expanded="false"
-              title="{{ item.title }}"
-              aria-label="{{ item.title }}"
-            >
-              {{ item.title }}
-              <span class="header__chevron" aria-hidden="true"></span>
-            </button>
-
-            <ul
-              class="header__mobile-dropdown list-unstyled"
-              role="menu"
-              aria-label="{{ item.title }} submenu"
-            >
-              {% for sub in item.below %}
-                <li>
-                  <a
-                    href="{{ sub.url }}"
-                    title="{{ sub.title }}"
-                    aria-label="{{ sub.title }}"
-                    {% if sub.in_active_trail %}aria-current="page"{% endif %}
-                  >{{ sub.title }}</a>
-                </li>
-              {% endfor %}
-            </ul>
-
-          {% else %}
-            <a
-              class="header__mobile-nav-link"
-              href="{{ item.url }}"
-              title="{{ item.title }}"
-              aria-label="{{ item.title }}"
-              {% if item.in_active_trail %}aria-current="page"{% endif %}
-            >
-              {{ item.title }}
-            </a>
-          {% endif %}
-
-        </li>
-      {% endfor %}
-
-    </ul>
-  </div>
-</div>

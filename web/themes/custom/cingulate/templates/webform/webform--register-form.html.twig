@@ -1,0 +1,65 @@
+{#
+/**
+ * @file
+ * Theme implementation for register_form webform.
+ *
+ * This template renders the registration form with proper 2-column grid layout
+ * matching the register.html wireframe structure.
+ *
+ * Available variables:
+ * - attributes: HTML attributes for the form element.
+ * - element: Form element with all fields and system elements.
+ * - title_prefix: Additional output populated by modules.
+ * - title_suffix: Additional output populated by modules.
+ *
+ * @see template_preprocess_webform()
+ * @see _webform_form_after_build()
+ *
+ * @ingroup themeable
+ */
+#}
+
+{% if element.confirmation %}
+    {{ element.confirmation }}
+{% endif %}
+
+{{ element['#prefix']|raw }}
+
+<form{{ attributes.addClass('reg-form') }}>
+
+  <div class="reg-form__row">
+    <div class="reg-form__field">
+      {{ element.elements.first_name }}
+    </div>
+
+    <div class="reg-form__field">
+      {{ element.elements.last_name }}
+    </div>
+  </div>
+
+  <div class="reg-form__field">
+    {{ element.elements.mobile_phone }}
+  </div>
+
+  <div class="reg-form__field">
+    {{ element.elements.email }}
+  </div>
+
+  <div class="reg-form__field">
+    {{ element.elements.npi_number }}
+  </div>
+
+  <div class="reg-form__field">
+    {{ element.elements.zip_code }}
+  </div>
+
+
+  {{ element.elements.actions }}
+
+  {{ element.form_build_id }}
+  {{ element.form_token }}
+  {{ element.form_id }}
+
+</form>
+
+{{ element['#suffix']|raw }}

@@ -1,0 +1,30 @@
+{#
+/**
+ * @file
+ * Template for Hero Banner paragraph.
+ *
+ * Available variables:
+ *   - content.field_heading: Hero heading
+ *   - content.field_body: Hero body text
+ *   - paragraph: The paragraph entity
+ *
+ * @see template_preprocess_paragraph()
+ *
+ * @ingroup themeable
+ */
+#}
+{{ attach_library('cingulate/component-hero') }}
+
+<section id="cmp-hero" aria-label="Hero banner">
+  <div class="hero__inner">
+    {% if content.field_heading is not empty %}
+      <h1 class="hero__title">{{ content.field_heading }}</h1>
+    {% endif %}
+
+    {% if content.field_body is not empty %}
+      <div class="hero__body">
+        {{ content.field_body }}
+      </div>
+    {% endif %}
+  </div>
+</section>

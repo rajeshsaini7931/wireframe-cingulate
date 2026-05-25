@@ -27,7 +27,27 @@ function cingulate_preprocess_page(array &$variables): void {
  * Implements hook_preprocess_HOOK() for node.html.twig.
  */
 function cingulate_preprocess_node(array &$variables): void {
-
+  /** @var \Drupal\node\Entity\Node $node */
+  $node = $variables['node'];
+  
+  // Add breadcrumb to landing_page and webform nodes.
+  if (in_array($node->bundle(), ['landing_page', 'webform'], TRUE)) {
+    // Get the breadcrumb for the current route.
+    $breadcrumb = \Drupal::service('breadcrumb')
+      ->build(\Drupal::routeMatch());
+    
+    if ($breadcrumb) {
+      $variables['breadcrumb'] = [
+        '#theme' => 'breadcrumb',
+        '#links' => $breadcrumb->getLinks(),
+        '#cache' => [
+          'contexts' => $breadcrumb->getCacheContexts(),
+          'tags' => $breadcrumb->getCacheTags(),
+          'max-age' => $breadcrumb->getCacheMaxAge(),
+        ],
+      ];
+    }
+  }
 }
 
 /**
@@ -341,4 +361,51 @@ function cingulate_preprocess_node__secondary_page(array &$variables): void {
 
   // Suppress the default field output — we render manually above.
   unset($variables['content']['field_page_sections']);
+}
+
+/**
+ * Implements hook_preprocess_HOOK() for webform.html.twig.
+ */
+function cingulate_preprocess_webform(&$variables) {
+  if (isset($variables['element']['#webform_id']) &&
+      $variables['element']['#webform_id'] === 'register_form') {
+    // Debug: Write element structure to file.
+    // $debug_file = '/Users/rsaini/Sites/drupal-sites/wireframe-cingulate/backups/webform-element-debug.txt';
+    // $output = "=== Webform Element Structure ===" . PHP_EOL;
+    // $output .= print_r($variables['element'], TRUE);
+    // file_put_contents($debug_file, $output);
+    
+    // Add custom classes to submit button.
+    if (isset($variables['element']['elements']['actions']['submit'])) {
+      $variables['element']['elements']['actions']['submit']['#attributes']['class'][] = 'reg-form__submit';
+    }
+  }
+}
+
+/**
+ * Implements hook_preprocess_HOOK() for input.html.twig.
+ */
+function cingulate_preprocess_input(&$variables) {
+  $element = $variables['element'];
+  
+  // Add custom classes to register form inputs.
+  if (isset($element['#webform']) && $element['#webform'] === 'register_form') {
+    if ($element['#type'] === 'textfield' || 
+        $element['#type'] === 'email' || 
+        $element['#type'] === 'tel') {
+      $variables['attributes']['class'][] = 'reg-form__input';
+    }
+  }
+}
+
+/**
+ * Implements hook_preprocess_HOOK() for form_element.html.twig.
+ */
+function cingulate_preprocess_form_element(&$variables) {
+  $element = $variables['element'];
+  
+  // Add custom classes to register form field labels.
+  if (isset($element['#webform']) && $element['#webform'] === 'register_form') {
+    $variables['label']['#attributes']['class'][] = 'reg-form__label';
+  }
 }

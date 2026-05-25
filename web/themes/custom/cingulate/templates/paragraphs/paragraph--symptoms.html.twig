@@ -1,0 +1,40 @@
+{#
+/**
+ * @file
+ * Template for Symptoms of ADHD paragraph.
+ *
+ * Available variables:
+ *   - content.field_section_heading: Section heading
+ *
+ * @see template_preprocess_paragraph()
+ *
+ * @ingroup themeable
+ */
+#}
+{{ attach_library('cingulate/component-symptoms') }}
+
+<section id="cmp-symptoms">
+  {% if content.field_section_heading is not empty %}
+    <h2 class="symptoms__heading">{{ content.field_section_heading }}</h2>
+  {% endif %}
+
+  {# Infographic carousel box (placeholder) #}
+  <div class="symptoms__box" role="region" aria-label="Infographics carousel">
+    <div class="symptoms__box-content">
+      <p class="symptoms__box-label">Infographics</p>
+    </div>
+    <button class="symptoms__box-arrow" aria-label="Next infographic">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <circle cx="12" cy="12" r="10"/>
+        <polyline points="12 8 16 12 12 16"/>
+        <line x1="8" y1="12" x2="16" y2="12"/>
+      </svg>
+    </button>
+  </div>
+
+  {# Pagination dots #}
+  <div class="symptoms__pagination" role="tablist" aria-label="Infographic slides">
+    <div class="symptoms__dot symptoms__dot--active" role="tab" aria-selected="true" aria-label="Slide 1"></div>
+    <div class="symptoms__dot symptoms__dot--inactive" role="tab" aria-selected="false" aria-label="Slide 2"></div>
+  </div>
+</section>

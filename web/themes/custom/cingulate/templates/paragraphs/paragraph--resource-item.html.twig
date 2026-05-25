@@ -1,0 +1,56 @@
+{#
+/**
+ * @file
+ * Template for Resource Item paragraph (sub-paragraph).
+ *
+ * Available variables:
+ *   - paragraph: The paragraph entity
+ *
+ * @see template_preprocess_paragraph()
+ *
+ * @ingroup themeable
+ */
+#}
+{% set video_url = paragraph.field_video_url.0.uri %}
+{% set title = paragraph.field_item_title.value %}
+{% set topic = paragraph.field_topic.value %}
+{% set duration = paragraph.field_duration.value %}
+
+<div class="resource-item" data-video-url="{{ video_url }}" data-title="{{ title }}" data-topic="{{ topic }}" data-duration="{{ duration }}">
+  
+  {% if content.field_thumbnail is not empty %}
+    <div class="resource-item__thumb">
+      {{ content.field_thumbnail }}
+    </div>
+  {% else %}
+    <div class="resource-item__thumb" aria-hidden="true"></div>
+  {% endif %}
+
+  <div class="resource-item__info">
+    <div class="resource-item__titles">
+      {% if title %}
+        <p class="resource-item__title">{{ title }}</p>
+      {% endif %}
+      {% if topic %}
+        <p class="resource-item__topic">{{ topic }}</p>
+      {% endif %}
+    </div>
+    
+    {% if duration %}
+      <div class="resource-item__meta">
+        <svg class="resource-item__clock" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/>
+        </svg>
+        <span class="resource-item__duration">{{ duration }}</span>
+      </div>
+    {% endif %}
+  </div>
+
+  <div class="resource-item__play-wrap">
+    <button class="resource-item__play" aria-label="Play {{ title }}">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <circle cx="12" cy="12" r="10"/><polygon points="10 8 16 12 10 16 10 8"/>
+      </svg>
+    </button>
+  </div>
+</div>

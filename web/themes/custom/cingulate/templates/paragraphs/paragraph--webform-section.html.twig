@@ -1,0 +1,30 @@
+{#
+/**
+ * @file
+ * Template for Webform Section paragraph.
+ *
+ * Available variables:
+ *   - content.field_heading: Section title
+ *   - content.field_body: Section subtitle/description
+ *   - content.field_select_webform: Webform entity reference
+ *
+ * @see template_preprocess_paragraph()
+ *
+ * @ingroup themeable
+ */
+#}
+{{ attach_library('cingulate/component-register-form') }}
+
+<section id="cmp-register-form" class="reg-form-section" aria-labelledby="reg-form-heading">
+  {% if content.field_heading is not empty %}
+    <h2 id="reg-form-heading" class="inner-pg-section__title">{{ content.field_heading }}</h2>
+  {% endif %}
+
+  {% if content.field_body is not empty %}
+    <div class="reg-form-section__sub">{{ content.field_body }}</div>
+  {% endif %}
+  
+  {% if content.field_select_webform is not empty %}
+    {{ content.field_select_webform }}
+  {% endif %}
+</section>

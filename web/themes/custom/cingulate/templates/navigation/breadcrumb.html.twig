@@ -1,0 +1,38 @@
+{#
+/**
+ * @file
+ * Theme override for breadcrumb navigation.
+ *
+ * Available variables:
+ * - breadcrumb: Breadcrumb trail items with 'url' and 'text' keys.
+ *
+ * @see template_preprocess_breadcrumb()
+ *
+ * @ingroup themeable
+ */
+#}
+{{ attach_library('cingulate/component-breadcrumb') }}
+
+{% if breadcrumb %}
+  <nav class="breadcrumb-nav" aria-label="Breadcrumb">
+    <ol class="breadcrumb-nav__list">
+      {% for item in breadcrumb %}
+        <li class="breadcrumb-nav__item{% if loop.last %} breadcrumb-nav__item--current{% endif %}"{% if loop.last %} aria-current="page"{% endif %}>
+          {% if not loop.last %}
+            <a href="{{ item.url }}" class="breadcrumb-nav__link">{{ item.text }}</a>
+          {% else %}
+            {{ item.text }}
+          {% endif %}
+        </li>
+        {% if not loop.last %}
+          <li class="breadcrumb-nav__item breadcrumb-nav__item--separator" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                 stroke-linecap="round" stroke-linejoin="round" class="breadcrumb-nav__chevron" aria-hidden="true">
+              <polyline points="9 18 15 12 9 6"/>
+            </svg>
+          </li>
+        {% endif %}
+      {% endfor %}
+    </ol>
+  </nav>
+{% endif %}

@@ -12,6 +12,65 @@ global:
     - core/drupal
     - core/once
 
+# Navigation component — site header, HCP bar, dropdown menus.
+component-nav:
+  version: VERSION
+  css:
+    component:
+      css/components/nav.css: {}
+  dependencies:
+    - cingulate/global
+    - core/once
+
+# Footer component — legal navigation, copyright.
+component-footer:
+  version: VERSION
+  css:
+    component:
+      css/components/footer.css: {}
+  dependencies:
+    - cingulate/global
+
+# Contact Bar component — global phone and email contact info.
+component-contact:
+  version: VERSION
+  css:
+    component:
+      css/components/contact.css: {}
+  dependencies:
+    - cingulate/global
+
+# Hero Banner component — main landing page hero section.
+component-hero:
+  version: VERSION
+  css:
+    component:
+      css/components/hero.css: {}
+  dependencies:
+    - cingulate/global
+
+# Symptoms of ADHD component — infographic carousel with pagination dots.
+component-symptoms:
+  version: VERSION
+  css:
+    component:
+      css/components/symptoms.css: {}
+  dependencies:
+    - cingulate/global
+
+# Resource Materials component — tabbed cards with expandable items grid.
+component-resources:
+  version: VERSION
+  css:
+    component:
+      css/components/resources.css: {}
+  js:
+    js/resources.js: {}
+  dependencies:
+    - cingulate/global
+    - core/drupal
+    - core/once
+
 # Symptoms of ADHD carousel section.
 component-symptoms-adhd:
   version: VERSION
@@ -66,5 +125,32 @@ component-content-block:
   css:
     component:
       css/components/content-block.css: {}
+  dependencies:
+    - cingulate/global
+
+# Secondary Hero — page title banner for internal pages.
+component-secondary-hero:
+  version: VERSION
+  css:
+    component:
+      css/components/secondary-hero.css: {}
+  dependencies:
+    - cingulate/global
+
+# Breadcrumb Navigation — page hierarchy navigation.
+component-breadcrumb:
+  version: VERSION
+  css:
+    component:
+      css/components/breadcrumb.css: {}
+  dependencies:
+    - cingulate/global
+
+# Register Form — registration form with validation.
+component-register-form:
+  version: VERSION
+  css:
+    component:
+      css/components/register-form.css: {}
   dependencies:
     - cingulate/global

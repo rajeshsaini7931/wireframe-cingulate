@@ -1,0 +1,48 @@
+{#
+/**
+ * @file
+ * Template for the Contact Bar block_content block.
+ *
+ * Available variables (provided by cingulate_blocks_preprocess_block):
+ *   - contact_label: Label text (e.g., "Reach for more info:")
+ *   - phone: Phone number string
+ *   - email: Email address string
+ *
+ * @see cingulate_blocks_preprocess_block()
+ * @see _cingulate_blocks_preprocess_contact_bar()
+ *
+ * @ingroup themeable
+ */
+#}
+{{ attach_library('cingulate/component-contact') }}
+
+<section id="cmp-contact" aria-label="Contact information">
+  {% if contact_label is not empty %}
+    <p class="contact__label">{{ contact_label }}</p>
+  {% endif %}
+
+  <div class="contact__links">
+    {% if phone is not empty %}
+      <div class="contact__item">
+        <span class="contact__icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.24 12a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 3.15 1.17h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L7.09 8.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 21 16.92Z"/>
+          </svg>
+        </span>
+        <a href="tel:{{ phone|replace({'-': '', ' ': '', '(': '', ')': ''}) }}">{{ phone }}</a>
+      </div>
+    {% endif %}
+
+    {% if email is not empty %}
+      <div class="contact__item">
+        <span class="contact__icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+            <rect width="20" height="16" x="2" y="4" rx="2"/>
+            <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/>
+          </svg>
+        </span>
+        <a href="mailto:{{ email }}">{{ email }}</a>
+      </div>
+    {% endif %}
+  </div>
+</section>

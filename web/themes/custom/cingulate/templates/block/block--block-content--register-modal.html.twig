@@ -1,0 +1,56 @@
+{#
+/**
+ * @file
+ * Template for Register Modal block.
+ *
+ * Available variables:
+ *   - modal_title: Heading text
+ *   - modal_subtitle: Subtitle text
+ *   - register_url: Register page URL
+ *   - register_title: Register CTA button text
+ *
+ * Auto-shows on page load with localStorage suppression.
+ * Once dismissed (via close button OR Register CTA), never shows again.
+ *
+ * @see cingulate_blocks_preprocess_block__block_content__register_modal()
+ * @see web/themes/custom/cingulate/js/register-modal.js
+ *
+ * @ingroup themeable
+ */
+#}
+{{ attach_library('cingulate/component-register-modal') }}
+
+<div class="modal fade" id="registerModal" tabindex="-1"
+     aria-labelledby="registerModalTitle" aria-modal="true" role="dialog">
+  <div class="modal-dialog modal-dialog-centered register-modal__dialog">
+    <div class="modal-content register-modal__content">
+
+      {# Close X #}
+      <button type="button" class="register-modal__close" data-bs-dismiss="modal" aria-label="Close modal">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+             stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <line x1="18" y1="6" x2="6" y2="18"/>
+          <line x1="6" y1="6" x2="18" y2="18"/>
+        </svg>
+      </button>
+
+      {# Heading block #}
+      <div class="register-modal__header">
+        {% if modal_title %}
+          <h2 class="register-modal__title" id="registerModalTitle">{{ modal_title }}</h2>
+        {% endif %}
+        {% if modal_subtitle %}
+          <p class="register-modal__subtitle">{{ modal_subtitle }}</p>
+        {% endif %}
+      </div>
+
+      {# CTA #}
+      {% if register_url and register_title %}
+        <a href="{{ register_url }}" class="register-modal__submit" role="button">
+          {{ register_title }}
+        </a>
+      {% endif %}
+
+    </div>
+  </div>
+</div>

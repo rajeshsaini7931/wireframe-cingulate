@@ -1,0 +1,45 @@
+{#
+/**
+ * @file
+ * Cingulate theme's implementation to display a single page.
+ *
+ * Available variables:
+ *   - page.header: Items for the header region.
+ *   - page.content_top: Items for the content_top region.
+ *   - page.content: The main content of the current page.
+ *   - page.content_bottom: Items for the content_bottom region.
+ *   - page.footer: Items for the footer region.
+ *   - page.modals: Items for the modals region.
+ *
+ * @see template_preprocess_page()
+ * @see html.html.twig
+ */
+#}
+
+{# Header region — site navigation #}
+{% if page.header %}
+  {{ page.header }}
+{% endif %}
+
+{# Content Top region — appears before main content #}
+{% if page.content_top %}
+  {{ page.content_top }}
+{% endif %}
+
+{# Main content #}
+{{ page.content }}
+
+{# Content Bottom region — appears after main content, before footer #}
+{% if page.content_bottom %}
+  {{ page.content_bottom }}
+{% endif %}
+
+{# Footer region — site footer #}
+{% if page.footer %}
+  {{ page.footer }}
+{% endif %}
+
+{# Modals region — Bootstrap modals, overlays #}
+{% if page.modals %}
+  {{ page.modals }}
+{% endif %}

@@ -1,0 +1,116 @@
+/**
+ * @file
+ * Hero Banner component styles.
+ */
+
+#cmp-hero {
+  width: 100%;
+  min-height: 600px;
+  background: linear-gradient(108.77deg, #ffffff 17.99%, #bfbfbf 100%);
+  display: flex;
+  align-items: center;
+  padding: 0 80px 40px;
+}
+
+.hero__inner {
+  max-width: 848px;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  margin-left: calc(88px * 5);
+}
+
+/* ── Hero Title ──────────────────────────────────────────────────────────── */
+.hero__title {
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 44px;
+  font-weight: 700;
+  line-height: 1.1;
+  color: #000000;
+  margin: 0;
+}
+
+/* ── Hero Body ───────────────────────────────────────────────────────────── */
+.hero__body {
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 18px;
+  font-weight: 400;
+  line-height: 1.556;
+  color: #000000;
+  margin: 0;
+}
+
+/* ── Responsive ──────────────────────────────────────────────────────────── */
+@media (min-width: 1920px) {
+  #cmp-hero {
+    min-height: 700px;
+  }
+
+  .hero__title {
+    font-size: clamp(44px, 3vw, 56px);
+  }
+
+  .hero__inner {
+    margin-left: calc(88px * 6);
+  }
+}
+
+@media (max-width: 1440px) {
+  .hero__inner {
+    margin-left: clamp(80px, 8vw, 400px);
+  }
+
+  .hero__title {
+    font-size: clamp(32px, 3.5vw, 44px);
+  }
+}
+
+@media (max-width: 1200px) {
+  .hero__inner {
+    margin-left: clamp(40px, 5vw, 120px);
+  }
+}
+
+@media (max-width: 820px) {
+  #cmp-hero {
+    min-height: 320px;
+    padding: 40px 24px;
+  }
+
+  .hero__inner {
+    margin-left: 0;
+    max-width: 100%;
+    gap: 16px;
+  }
+
+  .hero__title {
+    font-size: clamp(28px, 7vw, 40px);
+  }
+
+  .hero__body {
+    font-size: clamp(16px, 4vw, 18px);
+    line-height: 1.5;
+  }
+}
+
+@media (max-width: 402px) {
+  #cmp-hero {
+    min-height: 280px;
+    padding: 32px 24px;
+  }
+
+  .hero__title {
+    font-size: 26px;
+  }
+
+  .hero__body {
+    font-size: 15px;
+  }
+}
+
+@media (max-width: 384px) {
+  .hero__title {
+    font-size: 24px;
+  }
+}

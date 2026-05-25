@@ -1,0 +1,397 @@
+<?php
+
+declare(strict_types=1);
+
+/**
+ * @file
+ * Provides preprocess hooks and theme suggestions for site header and footer.
+ *
+ * This module supports the block_content entity-based header/footer pattern
+ * (Phase D10) with Drupal 11 BigPipe compatibility.
+ */
+
+/**
+ * Implements hook_theme_suggestions_block_alter().
+ *
+ * Adds bundle-specific template suggestions for block_content blocks.
+ *
+ * Required for Drupal 11 BigPipe compatibility — core's
+ * block_content_theme_suggestions_block_alter() does NOT fire when blocks are
+ * lazy-loaded via BigPipe because #block_content is not set eagerly.
+ *
+ * This hook manually loads the block_content entity by UUID and adds the
+ * bundle suggestion: block__block_content__BUNDLE.
+ *
+ * @see \Drupal\block_content\Plugin\Block\BlockContentBlock
+ */
+function cingulate_blocks_theme_suggestions_block_alter(
+  array &$suggestions,
+  array $vars,
+): void {
+  // Only process block_content plugin blocks.
+  $plugin_id = $vars['elements']['#plugin_id'] ?? '';
+  if (!str_starts_with($plugin_id, 'block_content:')) {
+    return;
+  }
+
+  // Extract UUID from derivative plugin ID.
+  $uuid = $vars['elements']['#derivative_plugin_id'] ?? '';
+  if (!$uuid) {
+    return;
+  }
+
+  // Load block_content entity by UUID.
+  $entities = \Drupal::entityTypeManager()
+    ->getStorage('block_content')
+    ->loadByProperties(['uuid' => $uuid]);
+
+  $entity = reset($entities);
+  if (!$entity) {
+    return;
+  }
+
+  // Add bundle-specific suggestion: block__block_content__site_header
+  $suggestions[] = 'block__block_content__' . $entity->bundle();
+}
+
+/**
+ * Implements hook_preprocess_HOOK() for block templates.
+ *
+ * Extracts field values from site_header and site_footer block_content
+ * entities and passes them as clean Twig variables.
+ */
+function cingulate_blocks_preprocess_block(array &$variables): void {
+  // Only process block_content plugin blocks.
+  $plugin_id = $variables['plugin_id'] ?? '';
+  if (!str_starts_with($plugin_id, 'block_content:')) {
+    return;
+  }
+
+  // Get the block_content entity.
+  $block_content = $variables['content']['#block_content'] ?? NULL;
+  if (!$block_content) {
+    // Fallback: load by UUID if #block_content not set (BigPipe case).
+    $uuid = $variables['derivative_plugin_id'] ?? '';
+    if ($uuid) {
+      $entities = \Drupal::entityTypeManager()
+        ->getStorage('block_content')
+        ->loadByProperties(['uuid' => $uuid]);
+      $block_content = reset($entities);
+    }
+  }
+
+  if (!$block_content) {
+    return;
+  }
+
+  $bundle = $block_content->bundle();
+
+  // Preprocess site_header block.
+  if ($bundle === 'site_header') {
+    _cingulate_blocks_preprocess_header($variables, $block_content);
+  }
+
+  // Preprocess site_footer block.
+  if ($bundle === 'site_footer') {
+    _cingulate_blocks_preprocess_footer($variables, $block_content);
+  }
+
+  // Preprocess contact_bar block.
+  if ($bundle === 'contact_bar') {
+    _cingulate_blocks_preprocess_contact_bar($variables, $block_content);
+  }
+
+  // Preprocess register_modal block.
+  if ($bundle === 'register_modal') {
+    _cingulate_blocks_preprocess_register_modal($variables, $block_content);
+  }
+}
+
+/**
+ * Preprocess helper for site_header block_content.
+ *
+ * Extracts field values and menu tree for the header navigation.
+ *
+ * @param array &$variables
+ *   Template variables array.
+ * @param \Drupal\block_content\Entity\BlockContent $block_content
+ *   The site_header block_content entity.
+ */
+function _cingulate_blocks_preprocess_header(array &$variables, $block_content): void {
+  // HCP notice bar text.
+  if ($block_content->hasField('field_hcp_notice')
+    && !$block_content->get('field_hcp_notice')->isEmpty()) {
+    $variables['hcp_notice'] = $block_content->get('field_hcp_notice')
+      ->getString();
+  }
+
+  // Site name / logo text.
+  if ($block_content->hasField('field_site_name')
+    && !$block_content->get('field_site_name')->isEmpty()) {
+    $variables['site_name'] = $block_content->get('field_site_name')
+      ->getString();
+  }
+  else {
+    // Fallback to system site name.
+    $variables['site_name'] = \Drupal::config('system.site')->get('name');
+  }
+
+  // Header logo image (media reference).
+  $variables['header_logo_url'] = '';
+  $variables['header_logo_alt'] = '';
+  if ($block_content->hasField('field_header_logo')
+    && !$block_content->get('field_header_logo')->isEmpty()) {
+    /** @var \Drupal\media\Entity\Media $media */
+    $media = $block_content->get('field_header_logo')->entity;
+    if ($media) {
+      $source_field = $media->getSource()->getConfiguration()['source_field'];
+      if ($media->hasField($source_field)
+        && !$media->get($source_field)->isEmpty()) {
+        /** @var \Drupal\file\Entity\File $file */
+        $file = $media->get($source_field)->entity;
+        if ($file) {
+          $variables['header_logo_url'] = \Drupal::service('file_url_generator')
+            ->generateAbsoluteString($file->getFileUri());
+          $variables['header_logo_alt'] = $media->get($source_field)->alt ?? '';
+
+          // Bubble media and file cache tags.
+          $variables['#cache']['tags'] = array_merge(
+            $variables['#cache']['tags'] ?? [],
+            $media->getCacheTags(),
+            $file->getCacheTags(),
+          );
+        }
+      }
+    }
+  }
+
+  // Main navigation menu tree.
+  if ($block_content->hasField('field_header_menu')
+    && !$block_content->get('field_header_menu')->isEmpty()) {
+    $menu_name = $block_content->get('field_header_menu')->target_id;
+
+    if ($menu_name) {
+      $menu_tree = \Drupal::menuTree();
+      $parameters = $menu_tree->getCurrentRouteMenuTreeParameters($menu_name);
+      $parameters->setMaxDepth(2);
+
+      $tree = $menu_tree->load($menu_name, $parameters);
+      $manipulators = [
+        ['callable' => 'menu.default_tree_manipulators:checkAccess'],
+        ['callable' => 'menu.default_tree_manipulators:generateIndexAndSort'],
+      ];
+      $tree = $menu_tree->transform($tree, $manipulators);
+      $menu_build = $menu_tree->build($tree);
+
+      // Override theme hook to use custom template: menu--cingulate-header.html.twig
+      $menu_build['#theme'] = 'menu__cingulate_header';
+
+      $variables['menu_tree'] = $menu_build;
+
+      // Bubble menu cache metadata.
+      $variables['#cache']['tags'] = array_merge(
+        $variables['#cache']['tags'] ?? [],
+        ['config:system.menu.' . $menu_name],
+      );
+      $variables['#cache']['contexts'][] = 'route.menu_active_trails:' . $menu_name;
+    }
+  }
+
+  // Register CTA link.
+  if ($block_content->hasField('field_register_cta_link')
+    && !$block_content->get('field_register_cta_link')->isEmpty()) {
+    /** @var \Drupal\link\Plugin\Field\FieldType\LinkItem $link_item */
+    $link_item = $block_content->get('field_register_cta_link')->first();
+    $variables['register_cta_url'] = $link_item->getUrl()->toString();
+    $variables['register_cta_title'] = $link_item->get('title')->getString();
+  }
+
+  // Bubble block_content cache metadata.
+  $variables['#cache']['tags'] = array_merge(
+    $variables['#cache']['tags'] ?? [],
+    $block_content->getCacheTags(),
+  );
+}
+
+/**
+ * Preprocess helper for site_footer block_content.
+ *
+ * Extracts field values and menu tree for the footer legal links.
+ *
+ * @param array &$variables
+ *   Template variables array.
+ * @param \Drupal\block_content\Entity\BlockContent $block_content
+ *   The site_footer block_content entity.
+ */
+function _cingulate_blocks_preprocess_footer(array &$variables, $block_content): void {
+  // Footer logo image (media reference).
+  $variables['footer_logo_url'] = '';
+  $variables['footer_logo_alt'] = '';
+  if ($block_content->hasField('field_footer_logo')
+    && !$block_content->get('field_footer_logo')->isEmpty()) {
+    /** @var \Drupal\media\Entity\Media $media */
+    $media = $block_content->get('field_footer_logo')->entity;
+    if ($media) {
+      $source_field = $media->getSource()->getConfiguration()['source_field'];
+      if ($media->hasField($source_field)
+        && !$media->get($source_field)->isEmpty()) {
+        /** @var \Drupal\file\Entity\File $file */
+        $file = $media->get($source_field)->entity;
+        if ($file) {
+          $variables['footer_logo_url'] = \Drupal::service('file_url_generator')
+            ->generateAbsoluteString($file->getFileUri());
+          $variables['footer_logo_alt'] = $media->get($source_field)->alt ?? '';
+
+          // Bubble media and file cache tags.
+          $variables['#cache']['tags'] = array_merge(
+            $variables['#cache']['tags'] ?? [],
+            $media->getCacheTags(),
+            $file->getCacheTags(),
+          );
+        }
+      }
+    }
+  }
+
+  // Footer navigation menu tree.
+  if ($block_content->hasField('field_footer_menu')
+    && !$block_content->get('field_footer_menu')->isEmpty()) {
+    $menu_name = $block_content->get('field_footer_menu')->target_id;
+
+    if ($menu_name) {
+      $menu_tree = \Drupal::menuTree();
+      $parameters = $menu_tree->getCurrentRouteMenuTreeParameters($menu_name);
+      $parameters->setMaxDepth(1);
+
+      $tree = $menu_tree->load($menu_name, $parameters);
+      $manipulators = [
+        ['callable' => 'menu.default_tree_manipulators:checkAccess'],
+        ['callable' => 'menu.default_tree_manipulators:generateIndexAndSort'],
+      ];
+      $tree = $menu_tree->transform($tree, $manipulators);
+      $menu_build = $menu_tree->build($tree);
+
+      // Override theme hook to use custom template: menu--cingulate-footer.html.twig
+      $menu_build['#theme'] = 'menu__cingulate_footer';
+
+      $variables['menu_tree'] = $menu_build;
+
+      // Bubble menu cache metadata.
+      $variables['#cache']['tags'] = array_merge(
+        $variables['#cache']['tags'] ?? [],
+        ['config:system.menu.' . $menu_name],
+      );
+      $variables['#cache']['contexts'][] = 'route.menu_active_trails:' . $menu_name;
+    }
+  }
+
+  // Copyright text.
+  if ($block_content->hasField('field_copyright_text')
+    && !$block_content->get('field_copyright_text')->isEmpty()) {
+    $variables['copyright_text'] = $block_content->get('field_copyright_text')
+      ->first()
+      ->processed;
+  }
+
+  // Bubble block_content cache metadata.
+  $variables['#cache']['tags'] = array_merge(
+    $variables['#cache']['tags'] ?? [],
+    $block_content->getCacheTags(),
+  );
+}
+
+/**
+ * Preprocess helper for contact_bar block_content.
+ *
+ * Extracts field values for the contact bar.
+ *
+ * @param array &$variables
+ *   Template variables array.
+ * @param \Drupal\block_content\Entity\BlockContent $block_content
+ *   The contact_bar block_content entity.
+ */
+function _cingulate_blocks_preprocess_contact_bar(array &$variables, $block_content): void {
+  // Contact label.
+  $variables['contact_label'] = '';
+  if ($block_content->hasField('field_contact_label')
+    && !$block_content->get('field_contact_label')->isEmpty()) {
+    $variables['contact_label'] = $block_content->get('field_contact_label')->value;
+  }
+
+  // Phone number.
+  $variables['phone'] = '';
+  if ($block_content->hasField('field_phone')
+    && !$block_content->get('field_phone')->isEmpty()) {
+    $variables['phone'] = $block_content->get('field_phone')->value;
+  }
+
+  // Email address.
+  $variables['email'] = '';
+  if ($block_content->hasField('field_email')
+    && !$block_content->get('field_email')->isEmpty()) {
+    $variables['email'] = $block_content->get('field_email')->value;
+  }
+
+  // Bubble block_content cache metadata.
+  $variables['#cache']['tags'] = array_merge(
+    $variables['#cache']['tags'] ?? [],
+    $block_content->getCacheTags(),
+  );
+}
+
+/**
+ * Preprocess helper for register_modal block_content.
+ *
+ * Extracts field values for the register modal.
+ *
+ * @param array &$variables
+ *   Template variables array.
+ * @param \Drupal\block_content\Entity\BlockContent $block_content
+ *   The register_modal block_content entity.
+ */
+function _cingulate_blocks_preprocess_register_modal(array &$variables, $block_content): void {
+  // Modal title.
+  $variables['modal_title'] = '';
+  if ($block_content->hasField('field_modal_title')
+    && !$block_content->get('field_modal_title')->isEmpty()) {
+    $variables['modal_title'] = $block_content->get('field_modal_title')->value;
+  }
+
+  // Modal subtitle.
+  $variables['modal_subtitle'] = '';
+  if ($block_content->hasField('field_modal_subtitle')
+    && !$block_content->get('field_modal_subtitle')->isEmpty()) {
+    $variables['modal_subtitle'] = $block_content->get('field_modal_subtitle')->value;
+  }
+
+  // Register link.
+  if ($block_content->hasField('field_register_link')
+    && !$block_content->get('field_register_link')->isEmpty()) {
+    /** @var \Drupal\link\Plugin\Field\FieldType\LinkItem $link_item */
+    $link_item = $block_content->get('field_register_link')->first();
+    $variables['register_url']   = $link_item->getUrl()->toString();
+    $variables['register_title'] = $link_item->get('title')->getString();
+  }
+
+  // Bubble block_content cache metadata.
+  $variables['#cache']['tags'] = array_merge(
+    $variables['#cache']['tags'] ?? [],
+    $block_content->getCacheTags(),
+  );
+}
+
+/**
+ * Implements hook_preprocess_HOOK() for webform templates.
+ *
+ * Hides webform titles for embedded webforms in paragraphs.
+ */
+function cingulate_blocks_preprocess_webform(array &$variables): void {
+  // Hide the webform title when embedded via paragraphs.
+  if (isset($variables['element']['#webform_id'])) {
+    if ($variables['element']['#webform_id'] === 'register_form') {
+      // Remove title from render array.
+      unset($variables['element']['#title']);
+      unset($variables['title']);
+    }
+  }
+}

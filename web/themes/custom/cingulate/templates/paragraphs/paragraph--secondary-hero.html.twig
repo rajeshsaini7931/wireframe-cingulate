@@ -1,0 +1,23 @@
+{#
+/**
+ * @file
+ * Template for Secondary Hero paragraph.
+ *
+ * Available variables:
+ *   - content.field_heading: Page title heading
+ *   - paragraph: The paragraph entity
+ *
+ * Simple banner with page title for internal pages.
+ *
+ * @see template_preprocess_paragraph()
+ *
+ * @ingroup themeable
+ */
+#}
+{{ attach_library('cingulate/component-secondary-hero') }}
+
+<section id="cmp-secondary-hero" aria-label="{{ content.field_heading|render|striptags }} page banner">
+  {% if content.field_heading is not empty %}
+    <h1 class="secondary-hero__title">{{ content.field_heading }}</h1>
+  {% endif %}
+</section>

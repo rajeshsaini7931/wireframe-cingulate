@@ -1,0 +1,17 @@
+{#
+/**
+ * @file
+ * Template for resource items field.
+ *
+ * Outputs paragraph items directly without wrapper divs to maintain
+ * proper grid layout.
+ *
+ * Available variables:
+ * - items: List of items to render.
+ *
+ * @ingroup themeable
+ */
+#}
+{% for item in items %}
+  {{ item.content }}
+{% endfor %}

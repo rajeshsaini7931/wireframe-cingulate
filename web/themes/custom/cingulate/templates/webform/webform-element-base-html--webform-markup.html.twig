@@ -1,0 +1,18 @@
+{#
+/**
+ * @file
+ * Theme override for a webform markup element.
+ *
+ * Available variables:
+ * - element: The webform element.
+ * - value: The content for the element.
+ * - options: Render element options.
+ *
+ * @see template_preprocess_webform_element_base_html()
+ */
+#}
+{% if element['#webform_key'] == 'legal_agreement' %}
+  <p class="reg-form__legal-para">{{ value }}</p>
+{% else %}
+  {{ value }}
+{% endif %}

@@ -3,37 +3,26 @@
  * @file
  * Template for the Cingulate site footer navigation menu.
  *
- * Used exclusively by CingulateSiteFooterBlock. The #theme key on the menu
- * render array is set to 'menu__cingulate_footer' in the block's build()
- * method, so this template is used regardless of which menu machine name is
- * selected in Admin → Configuration → System → Cingulate Site Settings.
- *
- * Renders a flat horizontal list of legal links inside the footer.
+ * Renders a flat horizontal list of legal links.
  *
  * Available variables:
  *   - items: A list of menu items. Each contains:
  *     - title: Link title.
- *     - url: Url object — outputs the href string when printed.
- *     - in_active_trail: TRUE if in the active trail.
- *   - menu_name: The machine name of the currently configured menu.
+ *     - url: Url object.
+ *     - in_active_trail: TRUE if in active trail.
+ *   - menu_name: The machine name of the menu.
  *
- * @see \Drupal\cingulate_blocks\Plugin\Block\CingulateSiteFooterBlock
+ * @see cingulate_blocks_preprocess_block()
  * @see template_preprocess_menu()
  *
  * @ingroup themeable
  */
 #}
-<ul
-  class="footer__nav-links list-unstyled d-flex align-items-center justify-content-between flex-wrap"
-  role="list"
->
+<ul class="footer__nav" role="list">
   {% for item in items %}
     <li>
       <a
         href="{{ item.url }}"
-        class="footer__nav-link"
-        title="{{ item.title }}"
-        aria-label="{{ item.title }}"
         {% if item.in_active_trail %}aria-current="page"{% endif %}
       >{{ item.title }}</a>
     </li>

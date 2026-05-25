@@ -1,105 +1,47 @@
 {#
 /**
  * @file
- * Template for the site_footer block content type.
+ * Template for the Site Footer block_content block.
  *
- * Activated by Drupal's template suggestion:
- *   block--block-content--site-footer.html.twig
+ * Available variables (provided by cingulate_blocks_preprocess_block):
+ *   - footer_logo_url: Resolved absolute URL for footer logo image (optional).
+ *   - footer_logo_alt: Alt text for footer logo (optional).
+ *   - menu_tree: Render array of the footer navigation menu tree.
+ *   - copyright_text: Markup from field_copyright_text.
  *
- * Variables injected by cingulate_blocks_preprocess_block():
- *   - phone: Contact phone number string.
- *   - email: Contact email address string.
- *   - copyright: Copyright line string.
- *   - footer_logo_url: URL of the footer logo image (empty if not set).
- *   - footer_logo_alt: Alt text for the footer logo.
- *   - footer_menu_tree: Footer navigation menu render array (theme: menu__cingulate_footer).
- *
- * @see \Drupal\block_content\Entity\BlockContent
  * @see cingulate_blocks_preprocess_block()
- * @see menu--cingulate-footer.html.twig
+ * @see _cingulate_blocks_preprocess_footer()
  *
  * @ingroup themeable
  */
 #}
+{{ attach_library('cingulate/component-footer') }}
 
 <footer id="cmp-footer" role="contentinfo">
-
-  {# Contact Strip #}
-  <div class="footer__contact d-flex align-items-center flex-wrap">
-    <h2 class="footer__contact-heading flex-shrink-0">{{ 'Contact'|t }}</h2>
-
-    <div class="footer__contact-links d-flex align-items-center flex-wrap">
-
-      {# Phone #}
-      {% if phone is not empty %}
-        <a
-          href="tel:{{ phone }}"
-          class="footer__contact-item d-flex align-items-center"
-          aria-label="{{ 'Phone'|t }}: {{ phone }}"
-        >
-          <svg class="footer__contact-icon" xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-            <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/>
-          </svg>
-          <span>{{ phone }}</span>
-        </a>
-      {% endif %}
-
-      {# Email #}
-      {% if email is not empty %}
-        <a
-          href="mailto:{{ email }}"
-          class="footer__contact-item d-flex align-items-center"
-          aria-label="{{ 'Email'|t }}: {{ email }}"
-        >
-          <svg class="footer__contact-icon" xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-            <rect width="20" height="16" x="2" y="4" rx="2"/>
-            <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/>
-          </svg>
-          <span>{{ email }}</span>
-        </a>
-      {% endif %}
-
-    </div>
-  </div>
-
-  {# Bottom Legal Bar #}
-  <div class="footer__bottom d-flex align-items-center flex-wrap">
-
-    {# Logo — image from Media Library if uploaded, otherwise a placeholder #}
+  {# Logo Placeholder #}
+  <div class="footer__logo-wrap">
     {% if footer_logo_url is not empty %}
-      <a href="{{ path('<front>') }}" class="footer__logo flex-shrink-0" aria-label="{{ 'Go to homepage'|t }}">
-        <img
-          src="{{ footer_logo_url }}"
-          alt="{{ footer_logo_alt is not empty ? footer_logo_alt : 'Cingulate'|t }}"
-          class="footer__logo-img"
-        />
-      </a>
+      <img src="{{ footer_logo_url }}" alt="{{ footer_logo_alt }}" class="footer__logo-img" />
     {% else %}
-      <div
-        class="footer__logo-placeholder d-flex align-items-center justify-content-center flex-shrink-0"
-        aria-label="{{ 'Cingulate logo'|t }}"
-      >
-        <span class="visually-hidden">{{ 'Cingulate'|t }}</span>
-      </div>
+      <span>Company Logo</span>
     {% endif %}
-
-    {# Legal nav + divider + copyright #}
-    <div class="footer__legal d-flex flex-column align-items-center">
-
-      {# Footer legal navigation — rendered via menu--cingulate-footer.html.twig #}
-      {% if footer_menu_tree is not empty %}
-        <nav aria-label="{{ 'Footer legal links'|t }}">
-          {{ footer_menu_tree }}
-        </nav>
-      {% endif %}
-
-      <hr class="footer__divider" aria-hidden="true" />
-
-      {% if copyright is not empty %}
-        <p class="footer__copyright text-center">{{ copyright }}</p>
-      {% endif %}
-
-    </div>
   </div>
 
+  {# Legal Nav + Copyright #}
+  <div class="footer__legal">
+    <nav aria-label="Footer legal navigation">
+      {# Footer Menu Tree #}
+      {% if menu_tree is not empty %}
+        {{ menu_tree }}
+      {% endif %}
+    </nav>
+
+    {# Divider #}
+    <hr class="footer__divider" aria-hidden="true" />
+
+    {# Copyright Text #}
+    {% if copyright_text is not empty %}
+      <p class="footer__copyright">{{ copyright_text }}</p>
+    {% endif %}
+  </div>
 </footer>

@@ -214,3 +214,9 @@ auth.json
 # Track Drupal recipes (if using)
 !/recipes/
 !/recipes/**/*.yml
+
+/project/
+/project/*
+
+/screenshot/
+/screenshot/*

@@ -1,0 +1,127 @@
+/**
+ * @file
+ * Symptoms of ADHD component styles.
+ * Exact copy from wireframe dist/main.css lines 363-483.
+ */
+
+#cmp-symptoms {
+  padding: 60px 88px;
+  background: #ffffff;
+}
+#cmp-symptoms .symptoms__heading {
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 32px;
+  font-weight: 700;
+  line-height: 1;
+  color: #000000;
+  margin: 0 0 32px;
+}
+#cmp-symptoms .symptoms__box {
+  width: 100%;
+  min-height: 480px;
+  border: 2px solid #999999;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  background: #ffffff;
+}
+#cmp-symptoms .symptoms__box-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+}
+#cmp-symptoms .symptoms__box-label {
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 32px;
+  font-weight: 700;
+  color: #999999;
+  margin: 0;
+}
+#cmp-symptoms .symptoms__box-arrow {
+  position: absolute;
+  right: 24px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 48px;
+  height: 48px;
+  color: #999999;
+}
+#cmp-symptoms .symptoms__box-arrow svg {
+  width: 100%;
+  height: 100%;
+}
+#cmp-symptoms .symptoms__pagination {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  margin-top: 24px;
+}
+#cmp-symptoms .symptoms__dot {
+  height: 12px;
+  background: #999999;
+  border-radius: 6px;
+}
+#cmp-symptoms .symptoms__dot--active {
+  width: 40px;
+  background: #666666;
+}
+#cmp-symptoms .symptoms__dot--inactive {
+  width: 12px;
+}
+@media (min-width: 1920px) {
+  #cmp-symptoms {
+    padding: 80px 88px;
+  }
+}
+@media (max-width: 1440px) {
+  #cmp-symptoms {
+    padding: 60px clamp(40px, 5vw, 88px);
+  }
+}
+@media (max-width: 1200px) {
+  #cmp-symptoms {
+    padding: 48px 48px;
+  }
+}
+@media (max-width: 820px) {
+  #cmp-symptoms {
+    padding: 40px 24px;
+  }
+  #cmp-symptoms .symptoms__heading {
+    font-size: clamp(22px, 5vw, 32px);
+  }
+  #cmp-symptoms .symptoms__box {
+    min-height: 280px;
+  }
+  #cmp-symptoms .symptoms__box-label {
+    font-size: clamp(20px, 5vw, 28px);
+  }
+  #cmp-symptoms .symptoms__box-arrow {
+    width: 36px;
+    height: 36px;
+    right: 16px;
+  }
+}
+@media (max-width: 402px) {
+  #cmp-symptoms {
+    padding: 32px 24px;
+  }
+  #cmp-symptoms .symptoms__box {
+    min-height: 220px;
+  }
+  #cmp-symptoms .symptoms__heading {
+    font-size: 22px;
+  }
+  #cmp-symptoms .symptoms__box-label {
+    font-size: 18px;
+  }
+}
+@media (max-width: 384px) {
+  #cmp-symptoms .symptoms__heading {
+    font-size: 20px;
+  }
+}

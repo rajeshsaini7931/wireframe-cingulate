@@ -28,9 +28,7 @@
     
     {# Content Area with breadcrumb + remaining sections #}
     <div class="content-area">
-      {% if breadcrumb is not empty %}
-        {{ breadcrumb }}
-      {% endif %}
+        
       
       {# Render remaining paragraphs (starting from index 1) #}
       {% for key, item in content.field_content_sections %}

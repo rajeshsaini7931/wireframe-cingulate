@@ -1,0 +1,7 @@
+cingulate_blocks.register_modal_settings:
+  path: "/admin/config/cingulate/register-modal"
+  defaults:
+    _form: '\Drupal\cingulate_blocks\Form\RegisterModalSettingsForm'
+    _title: "Register Modal Settings"
+  requirements:
+    _permission: "administer site configuration"

@@ -137,12 +137,12 @@ component-secondary-hero:
   dependencies:
     - cingulate/global
 
-# Breadcrumb Navigation — page hierarchy navigation.
-component-breadcrumb:
+# Breadcrumb Navigation — hierarchical page location (Home → Parent → Current).
+component-breadcrumb-nav:
   version: VERSION
   css:
     component:
-      css/components/breadcrumb.css: {}
+      css/components/breadcrumb-nav.css: {}
   dependencies:
     - cingulate/global
 

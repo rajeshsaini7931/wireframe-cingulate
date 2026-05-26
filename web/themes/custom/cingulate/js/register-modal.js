@@ -1,41 +1,45 @@
 /**
  * @file
- * Register Modal behavior with localStorage suppression.
+ * Register Modal behavior with cookie-based suppression.
  *
- * Shows modal on page load UNLESS localStorage flag is set.
- * Sets flag when modal is dismissed via ANY method:
+ * Shows modal on page load UNLESS cookie is set.
+ * Sets cookie with configurable expiration when modal is dismissed via:
  * - Close button (X icon)
  * - Register CTA button
- * - Backdrop click
- * - ESC key press
  *
- * localStorage key: 'adhdEngage_registerModalDismissed'
- * localStorage value: 'true' when dismissed, null when never shown.
+ * Modal CANNOT be dismissed via backdrop click or ESC key (backdrop: static, keyboard: false).
+ *
+ * Cookie name: 'adhdEngage_registerModalDismissed'
+ * Cookie value: 'true' when dismissed
+ * Cookie duration: Configurable via drupalSettings (default: 30 days)
  */
 
 (function (Drupal, once) {
   "use strict";
 
   /**
-   * Register modal auto-show with suppression.
+   * Register modal auto-show with cookie suppression.
    *
    * @type {Drupal~behavior}
    *
    * @prop {Drupal~behaviorAttach} attach
-   *   Initializes register modal with localStorage check.
+   *   Initializes register modal with cookie check.
    */
   Drupal.behaviors.cingulateRegisterModal = {
     attach(context) {
       once("registerModal", "#registerModal", context).forEach((modalEl) => {
-        // ── Step 1: Check localStorage ─────────────────────────────────────
+        // ── Step 1: Read configuration ─────────────────────────────────────
+        const settings = drupalSettings.cingulateBlocks?.registerModal || {};
+        const cookieDuration = settings.cookieDuration || 2592000; // 30 days default
+        const cookieName = "adhdEngage_registerModalDismissed";
+
+        // ── Step 2: Check cookie ───────────────────────────────────────────
         // If user has previously dismissed the modal, do NOT show it again.
-        if (
-          localStorage.getItem("adhdEngage_registerModalDismissed") === "true"
-        ) {
+        if (getCookie(cookieName) === "true") {
           return; // Exit early — modal stays hidden.
         }
 
-        // ── Step 2: Initialize Bootstrap Modal ─────────────────────────────
+        // ── Step 3: Initialize Bootstrap Modal ─────────────────────────────
         if (typeof bootstrap === "undefined") {
           console.warn(
             "Bootstrap not loaded — register modal cannot initialize",
@@ -44,34 +48,68 @@
         }
 
         const modal = new bootstrap.Modal(modalEl, {
-          backdrop: true, // Allow backdrop click to close.
-          keyboard: true, // Allow ESC key to close.
+          backdrop: "static", // Prevent backdrop click from closing modal.
+          keyboard: false, // Prevent ESC key from closing modal.
         });
 
-        // ── Step 3: Show Modal on Page Load ────────────────────────────────
+        // ── Step 4: Show Modal on Page Load ────────────────────────────────
         modal.show();
 
-        // ── Step 4: Listen for Dismissal (ANY method) ──────────────────────
-        // Bootstrap's 'hidden.bs.modal' event fires AFTER modal is fully hidden.
-        // This captures ALL dismissal methods:
-        //   - Close button (X icon) with data-bs-dismiss="modal"
-        //   - Backdrop click
-        //   - ESC key press
-        //   - Programmatic hide()
-        modalEl.addEventListener("hidden.bs.modal", () => {
-          localStorage.setItem("adhdEngage_registerModalDismissed", "true");
-        });
+        // ── Step 5: Handle Close Button Click ──────────────────────────────
+        // Set cookie when user explicitly clicks the X close button.
+        const closeButton = modalEl.querySelector('[data-bs-dismiss="modal"]');
+        if (closeButton) {
+          closeButton.addEventListener("click", () => {
+            setCookie(cookieName, "true", cookieDuration);
+            modal.hide(); // Close modal.
+          });
+        }
 
-        // ── Step 5: Handle Register CTA Click ──────────────────────────────
-        // Set localStorage BEFORE navigation so modal won't show on return.
+        // ── Step 6: Handle Register CTA Click ──────────────────────────────
+        // Set cookie BEFORE navigation so modal won't show on return.
         const registerCta = modalEl.querySelector(".register-modal__submit");
         if (registerCta) {
           registerCta.addEventListener("click", () => {
-            localStorage.setItem("adhdEngage_registerModalDismissed", "true");
+            setCookie(cookieName, "true", cookieDuration);
             modal.hide(); // Close modal before navigation.
           });
         }
       });
     },
   };
+
+  /**
+   * Sets a cookie with expiration.
+   *
+   * @param {string} name
+   *   Cookie name.
+   * @param {string} value
+   *   Cookie value.
+   * @param {number} seconds
+   *   Expiration time in seconds.
+   */
+  function setCookie(name, value, seconds) {
+    const expires = new Date(Date.now() + seconds * 1000).toUTCString();
+    document.cookie = `${name}=${value}; expires=${expires}; path=/; SameSite=Lax`;
+  }
+
+  /**
+   * Gets a cookie value by name.
+   *
+   * @param {string} name
+   *   Cookie name.
+   *
+   * @return {string|null}
+   *   Cookie value or null if not found.
+   */
+  function getCookie(name) {
+    const cookies = document.cookie.split("; ");
+    for (let cookie of cookies) {
+      const [key, value] = cookie.split("=");
+      if (key === name) {
+        return value;
+      }
+    }
+    return null;
+  }
 })(Drupal, once);

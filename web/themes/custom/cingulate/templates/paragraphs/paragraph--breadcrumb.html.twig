@@ -1,0 +1,75 @@
+{#
+/**
+ * @file
+ * Template for Breadcrumb Navigation paragraph.
+ *
+ * Available variables:
+ *   - content: Render array of field values.
+ *   - paragraph: The paragraph entity.
+ *
+ * Field structure:
+ *   - Home: Always shown (hardcoded)
+ *   - Level 2: content.field_breadcrumb_level_2 (optional)
+ *   - Level 3: content.field_breadcrumb_level_3 (optional)
+ *   - Current: content.field_current_page_title (required)
+ *
+ * Example output:
+ *   Home → ADHD Overview → Resources → Register
+ *
+ * @see web/themes/custom/cingulate/css/components/breadcrumb-nav.css
+ *
+ * @ingroup themeable
+ */
+#}
+{{ attach_library('cingulate/component-breadcrumb-nav') }}
+
+{% set level_2 = paragraph.field_breadcrumb_level_2 %}
+{% set level_3 = paragraph.field_breadcrumb_level_3 %}
+{% set current_page = paragraph.field_current_page_title.value %}
+
+<nav class="breadcrumb-nav" aria-label="Breadcrumb">
+  <ol class="breadcrumb-nav__list">
+    
+    {# Level 1: Home (always shown) #}
+    <li class="breadcrumb-nav__item">
+      <a href="/" class="breadcrumb-nav__link">Home</a>
+    </li>
+
+    {# Level 2: Parent category (optional) #}
+    {% if level_2 and not level_2.isEmpty() %}
+      <li class="breadcrumb-nav__item breadcrumb-nav__item--separator" aria-hidden="true">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="breadcrumb-nav__chevron" aria-hidden="true">
+          <polyline points="9 18 15 12 9 6"></polyline>
+        </svg>
+      </li>
+      <li class="breadcrumb-nav__item">
+        <a href="{{ level_2.0.url }}" class="breadcrumb-nav__link">{{ level_2.0.title }}</a>
+      </li>
+    {% endif %}
+
+    {# Level 3: Sub-category (optional) #}
+    {% if level_3 and not level_3.isEmpty() %}
+      <li class="breadcrumb-nav__item breadcrumb-nav__item--separator" aria-hidden="true">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="breadcrumb-nav__chevron" aria-hidden="true">
+          <polyline points="9 18 15 12 9 6"></polyline>
+        </svg>
+      </li>
+      <li class="breadcrumb-nav__item">
+        <a href="{{ level_3.0.url }}" class="breadcrumb-nav__link">{{ level_3.0.title }}</a>
+      </li>
+    {% endif %}
+
+    {# Current page (no link, always shown) #}
+    {% if current_page %}
+      <li class="breadcrumb-nav__item breadcrumb-nav__item--separator" aria-hidden="true">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="breadcrumb-nav__chevron" aria-hidden="true">
+          <polyline points="9 18 15 12 9 6"></polyline>
+        </svg>
+      </li>
+      <li class="breadcrumb-nav__item breadcrumb-nav__item--current" aria-current="page">
+        {{ current_page }}
+      </li>
+    {% endif %}
+
+  </ol>
+</nav>

@@ -342,7 +342,7 @@ function _cingulate_blocks_preprocess_contact_bar(array &$variables, $block_cont
 /**
  * Preprocess helper for register_modal block_content.
  *
- * Extracts field values for the register modal.
+ * Passes configuration values to template and JavaScript via drupalSettings.
  *
  * @param array &$variables
  *   Template variables array.
@@ -350,33 +350,40 @@ function _cingulate_blocks_preprocess_contact_bar(array &$variables, $block_cont
  *   The register_modal block_content entity.
  */
 function _cingulate_blocks_preprocess_register_modal(array &$variables, $block_content): void {
-  // Modal title.
-  $variables['modal_title'] = '';
-  if ($block_content->hasField('field_modal_title')
-    && !$block_content->get('field_modal_title')->isEmpty()) {
-    $variables['modal_title'] = $block_content->get('field_modal_title')->value;
+  // Load configuration settings.
+  $config = \Drupal::config('cingulate_blocks.register_modal.settings');
+
+  // Pass values to Twig template.
+  $variables['modal_title'] = $config->get('modal_title') ?: 'Join ADHD ENGAGE';
+  $variables['register_url'] = $config->get('cta_url') ?: '/register';
+  $variables['register_title'] = $config->get('cta_text') ?: 'Register';
+
+  // Modal subtitle with filtered HTML processing.
+  $modal_description_value = $config->get('modal_description.value');
+  $modal_description_format = $config->get('modal_description.format') ?: 'filtered_html';
+
+  if ($modal_description_value) {
+    $variables['modal_subtitle'] = [
+      '#type' => 'processed_text',
+      '#text' => $modal_description_value,
+      '#format' => $modal_description_format,
+    ];
+  }
+  else {
+    $variables['modal_subtitle'] = 'Be part of our community and stay informed.';
   }
 
-  // Modal subtitle.
-  $variables['modal_subtitle'] = '';
-  if ($block_content->hasField('field_modal_subtitle')
-    && !$block_content->get('field_modal_subtitle')->isEmpty()) {
-    $variables['modal_subtitle'] = $block_content->get('field_modal_subtitle')->value;
-  }
+  // Pass cookie duration to JavaScript via drupalSettings.
+  $cookie_duration = $config->get('cookie_duration') ?: 2592000;
+  $variables['#attached']['drupalSettings']['cingulateBlocks']['registerModal'] = [
+    'cookieDuration' => (int) $cookie_duration,
+  ];
 
-  // Register link.
-  if ($block_content->hasField('field_register_link')
-    && !$block_content->get('field_register_link')->isEmpty()) {
-    /** @var \Drupal\link\Plugin\Field\FieldType\LinkItem $link_item */
-    $link_item = $block_content->get('field_register_link')->first();
-    $variables['register_url']   = $link_item->getUrl()->toString();
-    $variables['register_title'] = $link_item->get('title')->getString();
-  }
-
-  // Bubble block_content cache metadata.
+  // Bubble config and block_content cache metadata.
   $variables['#cache']['tags'] = array_merge(
     $variables['#cache']['tags'] ?? [],
     $block_content->getCacheTags(),
+    $config->getCacheTags(),
   );
 }
 

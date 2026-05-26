@@ -1,0 +1,13 @@
+npi-lookup:
+  version: VERSION
+  js:
+    js/npi-lookup.js: {}
+  css:
+    component:
+      css/npi-lookup.css: {}
+  dependencies:
+    - core/drupal
+    - core/jquery
+    - core/once
+    - core/drupal.dialog
+    - core/drupal.dialog.ajax

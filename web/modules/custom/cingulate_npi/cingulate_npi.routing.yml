@@ -1,0 +1,18 @@
+cingulate_npi.lookup_form:
+  path: "/npi-lookup/form"
+  defaults:
+    _form: '\Drupal\cingulate_npi\Form\NpiLookupForm'
+    _title: "NPI Lookup"
+  requirements:
+    _permission: "access content"
+  options:
+    _admin_route: false
+
+cingulate_npi.api_search:
+  path: "/api/npi-lookup/search"
+  defaults:
+    _controller: '\Drupal\cingulate_npi\Controller\NpiApiController::search'
+  requirements:
+    _permission: "access content"
+  options:
+    _admin_route: false

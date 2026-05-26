@@ -24,6 +24,7 @@
         "drupal/core-recommended": "^11.3",
         "drupal/paragraphs": "^1.20",
         "drupal/redirect": "^1.13",
+        "drupal/seckit": "^2.0",
         "drupal/webform": "^6.3@beta",
         "drush/drush": "^13.7"
     },

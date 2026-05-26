@@ -8,6 +8,22 @@ declare(strict_types=1);
  */
 
 /**
+ * Implements hook_theme().
+ */
+function cingulate_theme(array $existing, string $type, string $theme, string $path): array {
+  return [
+    'npi_lookup_modal' => [
+      'variables' => [
+        'modal_id' => 'npiLookupModal',
+        'modal_title' => NULL,
+        'modal_description' => NULL,
+      ],
+      'template' => 'webform/npi-lookup-modal',
+    ],
+  ];
+}
+
+/**
  * Implements hook_preprocess_HOOK() for html.html.twig.
  */
 function cingulate_preprocess_html(array &$variables): void {
@@ -21,6 +37,20 @@ function cingulate_preprocess_page(array &$variables): void {
   // Header and footer variables are now provided by CingulateSiteHeaderBlock
   // and CingulateSiteFooterBlock via cingulate_blocks.settings config.
   // Add page-level variables here as needed.
+
+  // Add NPI lookup modal on the register page.
+  $route_name = \Drupal::routeMatch()->getRouteName();
+  if ($route_name === 'entity.node.canonical') {
+    $node = \Drupal::routeMatch()->getParameter('node');
+    if ($node && $node->bundle() === 'landing_page' && $node->id() == 6) {
+      $variables['page']['modals']['npi_modal'] = [
+        '#theme' => 'npi_lookup_modal',
+        '#modal_id' => 'npiLookupModal',
+        '#modal_title' => t('NPI lookup'),
+        '#modal_description' => t('To find your NPI number, please fill out the information below.'),
+      ];
+    }
+  }
 }
 
 /**
@@ -369,11 +399,11 @@ function cingulate_preprocess_node__secondary_page(array &$variables): void {
 function cingulate_preprocess_webform(&$variables) {
   if (isset($variables['element']['#webform_id']) &&
       $variables['element']['#webform_id'] === 'register_form') {
-    // Debug: Write element structure to file.
-    // $debug_file = '/Users/rsaini/Sites/drupal-sites/wireframe-cingulate/backups/webform-element-debug.txt';
-    // $output = "=== Webform Element Structure ===" . PHP_EOL;
-    // $output .= print_r($variables['element'], TRUE);
-    // file_put_contents($debug_file, $output);
+
+    if (isset($variables['element']['elements']['npi_number'])) {
+      $variables['element']['elements']['npi_number']['#title_display'] = 'invisible';
+      $variables['element']['elements']['npi_number']['#title'] = '';
+    }
     
     // Add custom classes to submit button.
     if (isset($variables['element']['elements']['actions']['submit'])) {

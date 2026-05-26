@@ -27,7 +27,6 @@
 
 <form{{ attributes.addClass('reg-form') }}>
 
-  <div class="reg-form__row">
     <div class="reg-form__field">
       {{ element.elements.first_name }}
     </div>
@@ -35,7 +34,7 @@
     <div class="reg-form__field">
       {{ element.elements.last_name }}
     </div>
-  </div>
+
 
   <div class="reg-form__field">
     {{ element.elements.mobile_phone }}
@@ -46,7 +45,9 @@
   </div>
 
   <div class="reg-form__field">
-    {{ element.elements.npi_number }}
+    <label class="reg-form__label js-form-required form-required" for="edit-npi-number">NPI Number</label>
+     <span id="npiHint" class="reg-form__sub-label">Need your NPI number?<button type="button" class="webform-cta-button npi-lookup-button" data-bs-toggle="modal" data-bs-target="#npiLookupModal" aria-haspopup="dialog">Look it up here</button></span>
+  {{ element.elements.npi_number }}
   </div>
 
   <div class="reg-form__field">

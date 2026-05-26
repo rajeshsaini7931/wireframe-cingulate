@@ -1,0 +1,7 @@
+name: Cingulate NPI Lookup
+type: module
+description: "Provides NPI Registry lookup functionality for the registration form."
+package: Custom
+core_version_requirement: ^10 || ^11
+dependencies:
+  - drupal:webform

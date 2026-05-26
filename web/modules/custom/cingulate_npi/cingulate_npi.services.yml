@@ -1,0 +1,4 @@
+services:
+  logger.channel.cingulate_npi:
+    parent: logger.channel_base
+    arguments: ["cingulate_npi"]

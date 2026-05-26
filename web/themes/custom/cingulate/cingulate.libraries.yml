@@ -154,3 +154,18 @@ component-register-form:
       css/components/register-form.css: {}
   dependencies:
     - cingulate/global
+
+# NPI Lookup Modal — Bootstrap modal for NPI number search.
+component-npi-modal:
+  version: VERSION
+  css:
+    component:
+      css/components/npi-lookup-modal.css: {}
+  js:
+    js/npi-lookup-modal.js: {}
+  dependencies:
+    - cingulate/global
+    - core/drupal
+    - core/jquery
+    - core/once
+    - clientside_validation_jquery/jquery.validate

@@ -1,0 +1,16 @@
+<?php
+
+/**
+ * @file
+ * Cingulate NPI Lookup module hooks.
+ */
+
+/**
+ * Implements hook_webform_element_alter().
+ */
+function cingulate_npi_webform_element_alter(array &$element, \Drupal\Core\Form\FormStateInterface $form_state, array $context): void {
+  // Attach NPI lookup library to forms containing npi_number field.
+  if (isset($context['webform']) && $context['webform']->id() === 'register_form') {
+    $element['#attached']['library'][] = 'cingulate_npi/npi-lookup';
+  }
+}

@@ -146,14 +146,20 @@ component-breadcrumb-nav:
   dependencies:
     - cingulate/global
 
-# Register Form — registration form with validation.
+# Register Form — registration form with client-side validation.
 component-register-form:
   version: VERSION
   css:
     component:
       css/components/register-form.css: {}
+  js:
+    js/webform-validation-fix.js: {}
   dependencies:
     - cingulate/global
+    - core/drupal
+    - core/jquery
+    - core/once
+    - clientside_validation_jquery/jquery.validate
 
 # NPI Lookup Modal — Bootstrap modal for NPI number search.
 component-npi-modal:

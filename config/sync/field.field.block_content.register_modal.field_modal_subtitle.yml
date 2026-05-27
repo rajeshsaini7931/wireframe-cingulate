@@ -1,0 +1,22 @@
+uuid: 246581a6-0575-4924-b66b-1263d9dc8116
+langcode: en
+status: true
+dependencies:
+  config:
+    - block_content.type.register_modal
+    - field.storage.block_content.field_modal_subtitle
+  module:
+    - text
+id: block_content.register_modal.field_modal_subtitle
+field_name: field_modal_subtitle
+entity_type: block_content
+bundle: register_modal
+label: 'Modal Subtitle'
+description: ''
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings:
+  allowed_formats: {  }
+field_type: text_long

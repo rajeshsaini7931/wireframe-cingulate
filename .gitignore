@@ -27,8 +27,8 @@
 
 # ── Sensitive Configuration Files ──────────────────────────────────────────
 # Ignore all settings and services files (contain DB credentials, secrets)
-/web/sites/*/settings*.php
-/web/sites/*/services*.yml
+# /web/sites/*/settings*.php
+# /web/sites/*/services*.yml
 
 # Note: settings.ddev.php is managed by DDEV's own .gitignore in web/sites/default/
 # To track it, you'd need to modify that file, but DDEV regenerates it automatically

@@ -1,0 +1,19 @@
+uuid: 6354d2c1-0e9f-465a-8a0b-4f9be320ee2d
+langcode: en
+status: true
+dependencies:
+  config:
+    - block_content.type.site_header
+    - field.storage.block_content.field_hcp_notice
+id: block_content.site_header.field_hcp_notice
+field_name: field_hcp_notice
+entity_type: block_content
+bundle: site_header
+label: 'HCP Notice'
+description: 'Text displayed in the utility bar (e.g., "This site is intended for US HCPs").'
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string

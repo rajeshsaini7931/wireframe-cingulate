@@ -1,0 +1,8 @@
+uuid: 3c61644e-f9ba-4e18-bd89-34ac2608d35f
+langcode: en
+status: true
+dependencies: {  }
+id: contact_bar
+label: 'Contact Bar'
+revision: false
+description: 'Global contact bar with phone and email.'

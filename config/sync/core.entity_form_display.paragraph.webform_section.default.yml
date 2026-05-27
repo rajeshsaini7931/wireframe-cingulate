@@ -1,0 +1,44 @@
+uuid: 3c719983-a894-49e4-86c8-6e05997b99a4
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.paragraph.webform_section.field_body
+    - field.field.paragraph.webform_section.field_heading
+    - field.field.paragraph.webform_section.field_select_webform
+    - paragraphs.paragraphs_type.webform_section
+  module:
+    - text
+    - webform
+id: paragraph.webform_section.default
+targetEntityType: paragraph
+bundle: webform_section
+mode: default
+content:
+  field_body:
+    type: text_textarea
+    weight: 1
+    region: content
+    settings:
+      rows: 5
+      placeholder: 'Enter hero description...'
+    third_party_settings: {  }
+  field_heading:
+    type: string_textfield
+    weight: 0
+    region: content
+    settings:
+      size: 60
+      placeholder: 'Hero Banner'
+    third_party_settings: {  }
+  field_select_webform:
+    type: webform_entity_reference_select
+    weight: 2
+    region: content
+    settings:
+      default_data: true
+      webforms: {  }
+    third_party_settings: {  }
+hidden:
+  created: true
+  status: true

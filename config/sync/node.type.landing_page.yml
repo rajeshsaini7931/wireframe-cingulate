@@ -1,0 +1,11 @@
+uuid: b4196b37-592b-4a96-92f5-9896c3682dbc
+langcode: en
+status: true
+dependencies: {  }
+name: 'Landing Page'
+type: landing_page
+description: 'Flexible page layout using paragraph components.'
+help: null
+new_revision: true
+preview_mode: 1
+display_submitted: true

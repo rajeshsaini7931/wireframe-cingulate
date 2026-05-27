@@ -1,0 +1,19 @@
+uuid: ecda07a9-8fc2-440a-879b-25f9811bb43a
+langcode: en
+status: true
+dependencies:
+  config:
+    - block_content.type.contact_bar
+    - field.storage.block_content.field_phone
+id: block_content.contact_bar.field_phone
+field_name: field_phone
+entity_type: block_content
+bundle: contact_bar
+label: 'Phone Number'
+description: 'Contact phone number'
+required: true
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string

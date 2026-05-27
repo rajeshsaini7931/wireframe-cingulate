@@ -1,0 +1,10 @@
+uuid: cca94536-3ea2-4aa1-b602-74ebf806de02
+langcode: en
+status: true
+dependencies: {  }
+id: webform_section
+label: 'Webform Section'
+icon_uuid: null
+icon_default: null
+description: ''
+behavior_plugins: {  }

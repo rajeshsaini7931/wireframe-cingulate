@@ -1,0 +1,19 @@
+uuid: c4ecad9b-b32b-4225-98d6-47dc8f1cd86e
+langcode: en
+status: true
+dependencies:
+  config:
+    - block_content.type.contact_bar
+    - field.storage.block_content.field_contact_label
+id: block_content.contact_bar.field_contact_label
+field_name: field_contact_label
+entity_type: block_content
+bundle: contact_bar
+label: 'Contact Label'
+description: 'Label text for the contact bar (e.g., "Reach for more info:")'
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string

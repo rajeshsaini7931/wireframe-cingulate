@@ -1,0 +1,21 @@
+uuid: 907889f7-4a19-4c60-92bf-5ed254db78a7
+langcode: en
+status: true
+dependencies:
+  config:
+    - block_content.type.site_footer
+    - field.storage.block_content.field_footer_menu
+id: block_content.site_footer.field_footer_menu
+field_name: field_footer_menu
+entity_type: block_content
+bundle: site_footer
+label: 'Footer Menu'
+description: 'Legal navigation menu (select "Footer" or create custom menu).'
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: 'default:menu'
+  handler_settings: {  }
+field_type: entity_reference

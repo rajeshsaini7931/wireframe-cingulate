@@ -1,0 +1,10 @@
+uuid: c4f306d5-14bd-4576-995e-977657ec1cef
+langcode: en
+status: true
+dependencies: {  }
+id: breadcrumb
+label: 'Breadcrumb Navigation'
+icon_uuid: null
+icon_default: null
+description: 'Breadcrumb navigation with support for up to 3 levels (Home → Parent → Category → Current).'
+behavior_plugins: {  }

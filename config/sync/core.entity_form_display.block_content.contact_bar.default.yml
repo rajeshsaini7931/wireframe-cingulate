@@ -1,0 +1,47 @@
+uuid: 9529dd8e-bb2e-4189-b5f6-faacdcbfffe8
+langcode: en
+status: true
+dependencies:
+  config:
+    - block_content.type.contact_bar
+    - field.field.block_content.contact_bar.field_contact_label
+    - field.field.block_content.contact_bar.field_email
+    - field.field.block_content.contact_bar.field_phone
+id: block_content.contact_bar.default
+targetEntityType: block_content
+bundle: contact_bar
+mode: default
+content:
+  field_contact_label:
+    type: string_textfield
+    weight: 0
+    region: content
+    settings:
+      size: 60
+      placeholder: 'Reach for more info:'
+    third_party_settings: {  }
+  field_email:
+    type: email_default
+    weight: 2
+    region: content
+    settings:
+      placeholder: info@mail.com
+      size: 60
+    third_party_settings: {  }
+  field_phone:
+    type: string_textfield
+    weight: 1
+    region: content
+    settings:
+      size: 30
+      placeholder: 000-000-0000
+    third_party_settings: {  }
+  info:
+    type: string_textfield
+    weight: -5
+    region: content
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+hidden: {  }

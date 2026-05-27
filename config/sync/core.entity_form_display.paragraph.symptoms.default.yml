@@ -1,0 +1,23 @@
+uuid: d8720dcf-c795-409f-8ba7-e3df0e824109
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.paragraph.symptoms.field_section_heading
+    - paragraphs.paragraphs_type.symptoms
+id: paragraph.symptoms.default
+targetEntityType: paragraph
+bundle: symptoms
+mode: default
+content:
+  field_section_heading:
+    type: string_textfield
+    weight: 0
+    region: content
+    settings:
+      size: 60
+      placeholder: 'Symptoms of ADHD'
+    third_party_settings: {  }
+hidden:
+  created: true
+  status: true

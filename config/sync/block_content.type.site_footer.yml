@@ -1,0 +1,8 @@
+uuid: fd755ce2-f33c-4a38-82db-4de44eca3398
+langcode: en
+status: true
+dependencies: {  }
+id: site_footer
+label: 'Site Footer'
+revision: false
+description: 'Footer block with logo, legal navigation menu, and copyright text.'

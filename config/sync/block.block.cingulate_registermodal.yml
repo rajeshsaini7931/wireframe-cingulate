@@ -1,0 +1,28 @@
+uuid: fb5597af-6e20-45f6-8a87-01cb6fc23c69
+langcode: en
+status: true
+dependencies:
+  content:
+    - 'block_content:register_modal:787ac86c-bf45-4c23-9700-20282445b343'
+  module:
+    - block_content
+    - system
+  theme:
+    - cingulate
+id: cingulate_registermodal
+theme: cingulate
+region: modals
+weight: 0
+provider: null
+plugin: 'block_content:787ac86c-bf45-4c23-9700-20282445b343'
+settings:
+  id: 'block_content:787ac86c-bf45-4c23-9700-20282445b343'
+  label: 'Register Modal'
+  label_display: '0'
+  provider: block_content
+  view_mode: full
+visibility:
+  request_path:
+    id: request_path
+    negate: true
+    pages: /register

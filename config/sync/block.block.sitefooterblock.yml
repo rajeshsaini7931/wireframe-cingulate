@@ -1,0 +1,23 @@
+uuid: e7fd77d3-ac08-47f3-8fe9-4f83b48d56bf
+langcode: en
+status: true
+dependencies:
+  content:
+    - 'block_content:site_footer:686f6944-348a-4cc6-8864-982586bc214d'
+  module:
+    - block_content
+  theme:
+    - cingulate
+id: sitefooterblock
+theme: cingulate
+region: footer
+weight: 10
+provider: null
+plugin: 'block_content:686f6944-348a-4cc6-8864-982586bc214d'
+settings:
+  id: 'block_content:686f6944-348a-4cc6-8864-982586bc214d'
+  label: 'Site Footer'
+  label_display: '0'
+  provider: block_content
+  view_mode: full
+visibility: {  }

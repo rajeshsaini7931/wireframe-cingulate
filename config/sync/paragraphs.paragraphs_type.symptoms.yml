@@ -1,0 +1,10 @@
+uuid: c7c3c8a2-e690-4bfd-88b4-1575bb8efe74
+langcode: en
+status: true
+dependencies: {  }
+id: symptoms
+label: 'Symptoms of ADHD'
+icon_uuid: null
+icon_default: null
+description: 'Infographic carousel section for ADHD symptoms.'
+behavior_plugins: {  }

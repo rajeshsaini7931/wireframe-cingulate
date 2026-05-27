@@ -1,0 +1,22 @@
+uuid: babc2dae-8b51-456d-a181-8fa847b5bab1
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.paragraph.field_transcript
+    - paragraphs.paragraphs_type.resource_item
+  module:
+    - text
+id: paragraph.resource_item.field_transcript
+field_name: field_transcript
+entity_type: paragraph
+bundle: resource_item
+label: Transcript
+description: ''
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings:
+  allowed_formats: {  }
+field_type: text_long

@@ -1,0 +1,8 @@
+uuid: 1d29275b-54dd-401f-908b-9750141a2bf8
+langcode: en
+status: true
+dependencies: {  }
+id: site_header
+label: 'Site Header'
+revision: false
+description: 'Header block with HCP notice, site name, navigation menu, and register CTA.'

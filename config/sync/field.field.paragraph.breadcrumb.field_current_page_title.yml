@@ -1,0 +1,19 @@
+uuid: 28a2903a-626d-469b-ad42-89a24e338fa3
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.paragraph.field_current_page_title
+    - paragraphs.paragraphs_type.breadcrumb
+id: paragraph.breadcrumb.field_current_page_title
+field_name: field_current_page_title
+entity_type: paragraph
+bundle: breadcrumb
+label: 'Current Page Title'
+description: 'The text shown for the current page (no link). Example: "Register"'
+required: true
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string

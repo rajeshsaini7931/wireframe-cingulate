@@ -1,0 +1,22 @@
+uuid: 3b04bfe9-44d1-466f-aa55-80c51aa15e5c
+langcode: en
+status: true
+dependencies:
+  config:
+    - block_content.type.site_footer
+    - field.storage.block_content.field_copyright_text
+  module:
+    - text
+id: block_content.site_footer.field_copyright_text
+field_name: field_copyright_text
+entity_type: block_content
+bundle: site_footer
+label: 'Copyright Text'
+description: 'Footer copyright and legal text (supports basic HTML).'
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings:
+  allowed_formats: {  }
+field_type: text_long

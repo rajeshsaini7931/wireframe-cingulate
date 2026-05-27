@@ -1,0 +1,10 @@
+uuid: 0bfa6c45-57ce-44e3-9153-a2df1c76c952
+langcode: en
+status: true
+dependencies: {  }
+id: resources
+label: 'Resource Materials'
+icon_uuid: null
+icon_default: null
+description: 'Tabbed resource section with podcasts, videos, and newsletter cards.'
+behavior_plugins: {  }

@@ -1,0 +1,71 @@
+uuid: 1d85293e-5906-404c-b569-cbf36e27b40e
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.paragraph.resource_item.field_duration
+    - field.field.paragraph.resource_item.field_item_title
+    - field.field.paragraph.resource_item.field_thumbnail
+    - field.field.paragraph.resource_item.field_topic
+    - field.field.paragraph.resource_item.field_transcript
+    - field.field.paragraph.resource_item.field_video_url
+    - paragraphs.paragraphs_type.resource_item
+  module:
+    - link
+    - media_library
+    - text
+id: paragraph.resource_item.default
+targetEntityType: paragraph
+bundle: resource_item
+mode: default
+content:
+  field_duration:
+    type: string_textfield
+    weight: 2
+    region: content
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+  field_item_title:
+    type: string_textfield
+    weight: 0
+    region: content
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+  field_thumbnail:
+    type: media_library_widget
+    weight: 4
+    region: content
+    settings:
+      media_types: {  }
+    third_party_settings: {  }
+  field_topic:
+    type: string_textfield
+    weight: 1
+    region: content
+    settings:
+      size: 60
+      placeholder: ''
+    third_party_settings: {  }
+  field_transcript:
+    type: text_textarea
+    weight: 5
+    region: content
+    settings:
+      rows: 5
+      placeholder: ''
+    third_party_settings: {  }
+  field_video_url:
+    type: link_default
+    weight: 3
+    region: content
+    settings:
+      placeholder_url: ''
+      placeholder_title: ''
+    third_party_settings: {  }
+hidden:
+  created: true
+  status: true

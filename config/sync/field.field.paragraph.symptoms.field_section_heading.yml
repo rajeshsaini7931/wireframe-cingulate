@@ -1,0 +1,19 @@
+uuid: e4f7299d-e619-47cf-8d6e-64edafca85c1
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.paragraph.field_section_heading
+    - paragraphs.paragraphs_type.symptoms
+id: paragraph.symptoms.field_section_heading
+field_name: field_section_heading
+entity_type: paragraph
+bundle: symptoms
+label: 'Section Heading'
+description: ''
+required: true
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string

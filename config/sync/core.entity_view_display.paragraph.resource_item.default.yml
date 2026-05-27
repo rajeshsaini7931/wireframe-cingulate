@@ -1,0 +1,73 @@
+uuid: f6000911-84af-4f09-aeca-724096a8bded
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.paragraph.resource_item.field_duration
+    - field.field.paragraph.resource_item.field_item_title
+    - field.field.paragraph.resource_item.field_thumbnail
+    - field.field.paragraph.resource_item.field_topic
+    - field.field.paragraph.resource_item.field_transcript
+    - field.field.paragraph.resource_item.field_video_url
+    - paragraphs.paragraphs_type.resource_item
+  module:
+    - link
+    - text
+id: paragraph.resource_item.default
+targetEntityType: paragraph
+bundle: resource_item
+mode: default
+content:
+  field_duration:
+    type: string
+    label: hidden
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    weight: 2
+    region: content
+  field_item_title:
+    type: string
+    label: hidden
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    weight: 0
+    region: content
+  field_thumbnail:
+    type: entity_reference_entity_view
+    label: hidden
+    settings:
+      view_mode: default
+      link: false
+    third_party_settings: {  }
+    weight: 4
+    region: content
+  field_topic:
+    type: string
+    label: hidden
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    weight: 1
+    region: content
+  field_transcript:
+    type: text_default
+    label: hidden
+    settings: {  }
+    third_party_settings: {  }
+    weight: 5
+    region: content
+  field_video_url:
+    type: link
+    label: hidden
+    settings:
+      trim_length: 80
+      url_only: false
+      url_plain: false
+      rel: ''
+      target: ''
+    third_party_settings: {  }
+    weight: 3
+    region: content
+hidden: {  }

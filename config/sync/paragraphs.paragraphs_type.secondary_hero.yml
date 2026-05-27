@@ -1,0 +1,10 @@
+uuid: e9c50499-8b50-4ee3-bd64-52a2e28059d2
+langcode: en
+status: true
+dependencies: {  }
+id: secondary_hero
+label: 'Secondary Hero'
+icon_uuid: null
+icon_default: null
+description: 'Simple banner with page title for internal pages.'
+behavior_plugins: {  }

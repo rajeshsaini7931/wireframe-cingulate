@@ -1,0 +1,23 @@
+uuid: 2876d929-75cb-4bf6-afcd-cef0a92b5b65
+langcode: en
+status: true
+dependencies:
+  config:
+    - block_content.type.site_header
+    - field.storage.block_content.field_register_cta_link
+  module:
+    - link
+id: block_content.site_header.field_register_cta_link
+field_name: field_register_cta_link
+entity_type: block_content
+bundle: site_header
+label: 'Register CTA Link'
+description: 'Link to the registration page (URL + button text).'
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings:
+  title: 1
+  link_type: 1
+field_type: link

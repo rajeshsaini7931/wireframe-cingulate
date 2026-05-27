@@ -1,0 +1,43 @@
+uuid: dc01363c-9242-4e18-9843-5b12ea21f23e
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.paragraph.breadcrumb.field_breadcrumb_level_2
+    - field.field.paragraph.breadcrumb.field_breadcrumb_level_3
+    - field.field.paragraph.breadcrumb.field_current_page_title
+    - paragraphs.paragraphs_type.breadcrumb
+  module:
+    - link
+id: paragraph.breadcrumb.default
+targetEntityType: paragraph
+bundle: breadcrumb
+mode: default
+content:
+  field_breadcrumb_level_2:
+    type: link_default
+    weight: 1
+    region: content
+    settings:
+      placeholder_url: /adhd-overview
+      placeholder_title: 'ADHD Overview'
+    third_party_settings: {  }
+  field_breadcrumb_level_3:
+    type: link_default
+    weight: 2
+    region: content
+    settings:
+      placeholder_url: /resources
+      placeholder_title: Resources
+    third_party_settings: {  }
+  field_current_page_title:
+    type: string_textfield
+    weight: 0
+    region: content
+    settings:
+      size: 60
+      placeholder: Register
+    third_party_settings: {  }
+hidden:
+  created: true
+  status: true

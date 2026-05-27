@@ -1,0 +1,21 @@
+uuid: 7f74bd9f-0f19-48ae-b0a7-b1c9384bdc91
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.paragraph.secondary_hero.field_heading
+    - paragraphs.paragraphs_type.secondary_hero
+id: paragraph.secondary_hero.default
+targetEntityType: paragraph
+bundle: secondary_hero
+mode: default
+content:
+  field_heading:
+    type: string
+    label: hidden
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    weight: 0
+    region: content
+hidden: {  }

@@ -1,0 +1,21 @@
+uuid: 920213e4-e6d6-4c3c-9282-1ff7dfa26e78
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.paragraph.symptoms.field_section_heading
+    - paragraphs.paragraphs_type.symptoms
+id: paragraph.symptoms.default
+targetEntityType: paragraph
+bundle: symptoms
+mode: default
+content:
+  field_section_heading:
+    type: string
+    label: hidden
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    weight: 0
+    region: content
+hidden: {  }

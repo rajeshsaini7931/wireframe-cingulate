@@ -1,0 +1,24 @@
+uuid: 28ea5b22-c14a-4aa7-bd5d-c99b527afc38
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.paragraph.field_thumbnail
+    - media.type.image
+    - paragraphs.paragraphs_type.resource_item
+id: paragraph.resource_item.field_thumbnail
+field_name: field_thumbnail
+entity_type: paragraph
+bundle: resource_item
+label: Thumbnail
+description: ''
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: 'default:media'
+  handler_settings:
+    target_bundles:
+      image: image
+field_type: entity_reference

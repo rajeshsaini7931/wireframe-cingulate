@@ -1,0 +1,49 @@
+uuid: 95c9be21-172a-49dd-97de-52c771e7dabc
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.paragraph.breadcrumb.field_breadcrumb_level_2
+    - field.field.paragraph.breadcrumb.field_breadcrumb_level_3
+    - field.field.paragraph.breadcrumb.field_current_page_title
+    - paragraphs.paragraphs_type.breadcrumb
+  module:
+    - link
+id: paragraph.breadcrumb.default
+targetEntityType: paragraph
+bundle: breadcrumb
+mode: default
+content:
+  field_breadcrumb_level_2:
+    type: link
+    label: hidden
+    settings:
+      trim_length: 80
+      url_only: false
+      url_plain: false
+      rel: ''
+      target: ''
+    third_party_settings: {  }
+    weight: 0
+    region: content
+  field_breadcrumb_level_3:
+    type: link
+    label: hidden
+    settings:
+      trim_length: 80
+      url_only: false
+      url_plain: false
+      rel: ''
+      target: ''
+    third_party_settings: {  }
+    weight: 1
+    region: content
+  field_current_page_title:
+    type: string
+    label: hidden
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    weight: 2
+    region: content
+hidden: {  }

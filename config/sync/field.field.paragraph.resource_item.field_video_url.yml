@@ -1,0 +1,23 @@
+uuid: 1c69a3cc-5262-4594-9fee-34523abd3938
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.paragraph.field_video_url
+    - paragraphs.paragraphs_type.resource_item
+  module:
+    - link
+id: paragraph.resource_item.field_video_url
+field_name: field_video_url
+entity_type: paragraph
+bundle: resource_item
+label: 'Video URL'
+description: ''
+required: true
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings:
+  title: 1
+  link_type: 17
+field_type: link

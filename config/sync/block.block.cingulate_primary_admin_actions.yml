@@ -1,0 +1,20 @@
+uuid: 23b2946f-5c83-4fba-a520-a8936567ae96
+langcode: en
+status: true
+dependencies:
+  theme:
+    - cingulate
+_core:
+  default_config_hash: Q9_2whdOj1YIomfvsIfopROW4FT_X5pY0DjdOiOaQ5U
+id: cingulate_primary_admin_actions
+theme: cingulate
+region: header
+weight: -3
+provider: null
+plugin: local_actions_block
+settings:
+  id: local_actions_block
+  label: 'Primary admin actions'
+  label_display: '0'
+  provider: core
+visibility: {  }

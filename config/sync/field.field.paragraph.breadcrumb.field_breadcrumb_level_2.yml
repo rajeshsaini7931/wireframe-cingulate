@@ -1,0 +1,23 @@
+uuid: 00876b20-9dea-447d-9ec4-cde1a4c8700f
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.paragraph.field_breadcrumb_level_2
+    - paragraphs.paragraphs_type.breadcrumb
+  module:
+    - link
+id: paragraph.breadcrumb.field_breadcrumb_level_2
+field_name: field_breadcrumb_level_2
+entity_type: paragraph
+bundle: breadcrumb
+label: 'Level 2 (Parent)'
+description: 'Optional parent category link. Example: "ADHD Overview"'
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings:
+  title: 2
+  link_type: 17
+field_type: link

@@ -1,0 +1,10 @@
+uuid: ae5bd7fc-e820-4e92-9ac0-b6475611721d
+langcode: en
+status: true
+dependencies: {  }
+id: resource_item
+label: 'Resource Item'
+icon_uuid: null
+icon_default: null
+description: 'Individual resource item (video, podcast, newsletter) with thumbnail, title, video URL, and transcript.'
+behavior_plugins: {  }

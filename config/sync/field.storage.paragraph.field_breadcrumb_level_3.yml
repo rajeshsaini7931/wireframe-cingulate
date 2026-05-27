@@ -1,0 +1,19 @@
+uuid: df96c6b3-dc84-42f2-bd58-1d2d203eb545
+langcode: en
+status: true
+dependencies:
+  module:
+    - link
+    - paragraphs
+id: paragraph.field_breadcrumb_level_3
+field_name: field_breadcrumb_level_3
+entity_type: paragraph
+type: link
+settings: {  }
+module: link
+locked: false
+cardinality: 1
+translatable: true
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false

@@ -1,0 +1,21 @@
+uuid: a79f3cf4-92d6-4eb8-9061-477ca0799cec
+langcode: en
+status: true
+dependencies:
+  config:
+    - block_content.type.site_header
+    - field.storage.block_content.field_header_menu
+id: block_content.site_header.field_header_menu
+field_name: field_header_menu
+entity_type: block_content
+bundle: site_header
+label: 'Header Menu'
+description: 'Main navigation menu (select "Main navigation" or create custom menu).'
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: 'default:menu'
+  handler_settings: {  }
+field_type: entity_reference

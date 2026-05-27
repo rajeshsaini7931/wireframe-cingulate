@@ -1,0 +1,22 @@
+uuid: 495a397f-9995-40ab-92b8-cb3c4c8598fe
+langcode: en
+status: true
+dependencies:
+  theme:
+    - cingulate
+_core:
+  default_config_hash: ydSxdq7R66I8UMC460rOzlfzvlUL4VRbdwc6z9DWaUI
+id: cingulate_secondary_local_tasks
+theme: cingulate
+region: header
+weight: 0
+provider: null
+plugin: local_tasks_block
+settings:
+  id: local_tasks_block
+  label: 'Secondary tabs'
+  label_display: '0'
+  provider: core
+  primary: false
+  secondary: true
+visibility: {  }

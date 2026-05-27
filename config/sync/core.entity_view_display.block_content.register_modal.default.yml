@@ -1,0 +1,45 @@
+uuid: f19b4b94-d64a-49ca-b096-4801898f9e2a
+langcode: en
+status: true
+dependencies:
+  config:
+    - block_content.type.register_modal
+    - field.field.block_content.register_modal.field_modal_subtitle
+    - field.field.block_content.register_modal.field_modal_title
+    - field.field.block_content.register_modal.field_register_link
+  module:
+    - link
+    - text
+id: block_content.register_modal.default
+targetEntityType: block_content
+bundle: register_modal
+mode: default
+content:
+  field_modal_subtitle:
+    type: text_default
+    label: hidden
+    settings: {  }
+    third_party_settings: {  }
+    weight: 1
+    region: content
+  field_modal_title:
+    type: string
+    label: hidden
+    settings:
+      link_to_entity: false
+    third_party_settings: {  }
+    weight: 0
+    region: content
+  field_register_link:
+    type: link
+    label: hidden
+    settings:
+      trim_length: 80
+      url_only: false
+      url_plain: false
+      rel: ''
+      target: ''
+    third_party_settings: {  }
+    weight: 2
+    region: content
+hidden: {  }

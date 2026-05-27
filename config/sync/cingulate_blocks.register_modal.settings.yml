@@ -1,0 +1,7 @@
+modal_title: 'Welcome to ADHD'
+modal_description:
+  value: 'Kindly register to know more about the details of the site.'
+  format: restricted_html
+cta_text: Register
+cta_url: /register
+cookie_duration: 86400

@@ -1,0 +1,41 @@
+uuid: b7e98d06-8ff7-43d1-854c-4261cbd2a06e
+langcode: en
+status: true
+dependencies:
+  config:
+    - block_content.type.site_footer
+    - field.field.block_content.site_footer.field_copyright_text
+    - field.field.block_content.site_footer.field_footer_logo
+    - field.field.block_content.site_footer.field_footer_menu
+  module:
+    - text
+id: block_content.site_footer.default
+targetEntityType: block_content
+bundle: site_footer
+mode: default
+content:
+  field_copyright_text:
+    type: text_default
+    label: hidden
+    settings: {  }
+    third_party_settings: {  }
+    weight: 2
+    region: content
+  field_footer_logo:
+    type: entity_reference_entity_view
+    label: hidden
+    settings:
+      view_mode: default
+      link: false
+    third_party_settings: {  }
+    weight: 0
+    region: content
+  field_footer_menu:
+    type: entity_reference_label
+    label: hidden
+    settings:
+      link: true
+    third_party_settings: {  }
+    weight: 1
+    region: content
+hidden: {  }

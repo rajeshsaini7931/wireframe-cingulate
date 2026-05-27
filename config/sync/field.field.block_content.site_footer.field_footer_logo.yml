@@ -1,0 +1,27 @@
+uuid: ee8f1db5-58ce-4372-83d6-4290d4af2b43
+langcode: en
+status: true
+dependencies:
+  config:
+    - block_content.type.site_footer
+    - field.storage.block_content.field_footer_logo
+    - media.type.image
+id: block_content.site_footer.field_footer_logo
+field_name: field_footer_logo
+entity_type: block_content
+bundle: site_footer
+label: 'Footer Logo'
+description: 'Company logo displayed in the footer.'
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: 'default:media'
+  handler_settings:
+    target_bundles:
+      image: image
+    sort:
+      field: _none
+    auto_create: false
+field_type: entity_reference

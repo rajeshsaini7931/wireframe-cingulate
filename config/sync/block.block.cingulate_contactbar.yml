@@ -1,0 +1,23 @@
+uuid: f56805bf-b3cd-40dd-b255-848d4c009ded
+langcode: en
+status: true
+dependencies:
+  content:
+    - 'block_content:contact_bar:6d9c3744-28df-48f4-9b83-50252663e416'
+  module:
+    - block_content
+  theme:
+    - cingulate
+id: cingulate_contactbar
+theme: cingulate
+region: content_bottom
+weight: -10
+provider: null
+plugin: 'block_content:6d9c3744-28df-48f4-9b83-50252663e416'
+settings:
+  id: 'block_content:6d9c3744-28df-48f4-9b83-50252663e416'
+  label: 'Contact Bar'
+  label_display: ''
+  provider: block_content
+  view_mode: full
+visibility: {  }

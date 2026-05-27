@@ -1,0 +1,22 @@
+uuid: 407811c6-7260-4901-b4e4-f81b4733cd39
+langcode: en
+status: true
+dependencies:
+  module:
+    - help
+  theme:
+    - cingulate
+_core:
+  default_config_hash: VfPFqqxfkomud5CO8DUijw85QIl9GIxh_nIxLOYESxg
+id: cingulate_help
+theme: cingulate
+region: header
+weight: 1
+provider: null
+plugin: help_block
+settings:
+  id: help_block
+  label: Help
+  label_display: '0'
+  provider: help
+visibility: {  }

@@ -1,0 +1,8 @@
+uuid: b9c81293-4942-431e-9fb7-e97e4cbe5661
+langcode: en
+status: true
+dependencies: {  }
+id: register_modal
+label: 'Register Modal'
+revision: false
+description: 'Auto-show registration modal with cookie suppression.'

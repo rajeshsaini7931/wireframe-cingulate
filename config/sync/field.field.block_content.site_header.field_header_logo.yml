@@ -1,0 +1,27 @@
+uuid: b0975772-1ec1-4f02-8f74-ef8b8693a212
+langcode: en
+status: true
+dependencies:
+  config:
+    - block_content.type.site_header
+    - field.storage.block_content.field_header_logo
+    - media.type.image
+id: block_content.site_header.field_header_logo
+field_name: field_header_logo
+entity_type: block_content
+bundle: site_header
+label: 'Header Logo'
+description: 'Logo image displayed in the header. If empty, site name text is used.'
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: 'default:media'
+  handler_settings:
+    target_bundles:
+      image: image
+    sort:
+      field: _none
+    auto_create: false
+field_type: entity_reference

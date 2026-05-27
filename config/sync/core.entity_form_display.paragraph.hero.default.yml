@@ -1,0 +1,34 @@
+uuid: 8420d3a3-8f78-41c5-b8b7-b5f6daeb2d50
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.paragraph.hero.field_body
+    - field.field.paragraph.hero.field_heading
+    - paragraphs.paragraphs_type.hero
+  module:
+    - text
+id: paragraph.hero.default
+targetEntityType: paragraph
+bundle: hero
+mode: default
+content:
+  field_body:
+    type: text_textarea
+    weight: 1
+    region: content
+    settings:
+      rows: 5
+      placeholder: 'Enter hero description...'
+    third_party_settings: {  }
+  field_heading:
+    type: string_textfield
+    weight: 0
+    region: content
+    settings:
+      size: 60
+      placeholder: 'Hero Banner'
+    third_party_settings: {  }
+hidden:
+  created: true
+  status: true

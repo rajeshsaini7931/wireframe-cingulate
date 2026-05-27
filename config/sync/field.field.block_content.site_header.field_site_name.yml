@@ -1,0 +1,19 @@
+uuid: 3d5d19b3-97d4-4c00-8cfa-6eb6006dcb7e
+langcode: en
+status: true
+dependencies:
+  config:
+    - block_content.type.site_header
+    - field.storage.block_content.field_site_name
+id: block_content.site_header.field_site_name
+field_name: field_site_name
+entity_type: block_content
+bundle: site_header
+label: 'Site Name'
+description: 'Site name displayed in the header (e.g., "ADHD ENGAGE"). Falls back to system site name if empty.'
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string

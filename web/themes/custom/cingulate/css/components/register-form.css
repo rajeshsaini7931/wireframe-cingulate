@@ -273,3 +273,15 @@ input:invalid {
   outline: none;
   box-shadow: none;
 }
+
+.webform-type-checkbox {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+}
+.webform-type-checkbox input[type="checkbox"] {
+  margin-top: 5px;
+}
+.webform-element-description {
+  font-family: Arial, Helvetica, sans-serif;
+}

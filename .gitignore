@@ -26,12 +26,10 @@
 !/web/sites/*/private/.htaccess
 
 # ── Sensitive Configuration Files ──────────────────────────────────────────
-# Ignore all settings and services files (contain DB credentials, secrets)
-# /web/sites/*/settings*.php
+# settings.php is tracked (contains config_sync_directory, no credentials).
+# settings.ddev.php is intentionally NOT tracked — managed by DDEV, contains DB
+# credentials, and is regenerated automatically on each `ddev start`.
 # /web/sites/*/services*.yml
-
-# Note: settings.ddev.php is managed by DDEV's own .gitignore in web/sites/default/
-# To track it, you'd need to modify that file, but DDEV regenerates it automatically
 
 # ── Drupal Core & Scaffold ──────────────────────────────────────────────────
 /web/.csslintrc
@@ -52,10 +50,10 @@
 /web/sites/simpletest/
 
 # ── Configuration Sync Directory ───────────────────────────────────────────
-# Drupal configuration should be tracked for deployment
-# Uncomment to track the config/sync directory when you export config:
-# !/config/sync/
-# !/config/sync/**/*.yml
+# Drupal configuration is tracked for deployment.
+# $settings['config_sync_directory'] = '../config/sync' in settings.php
+!/config/sync/
+!/config/sync/**/*.yml
 
 # ── DDEV Local Development Environment ─────────────────────────────────────
 # DDEV has its own .gitignore at .ddev/.gitignore that handles most ignores

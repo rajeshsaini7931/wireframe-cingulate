@@ -13,12 +13,12 @@ A Drupal 11 site built with a custom theme (`cingulate`) and custom modules, man
 
 Install these on the new machine before starting:
 
-| Tool | Install |
-|---|---|
-| [Docker Desktop](https://www.docker.com/products/docker-desktop/) | Required by DDEV |
-| [DDEV](https://ddev.readthedocs.io/en/stable/users/install/) | Local dev environment |
-| [Composer](https://getcomposer.org/download/) | PHP dependency manager |
-| [Git](https://git-scm.com/) | Version control |
+| Tool                                                              | Install                |
+| ----------------------------------------------------------------- | ---------------------- |
+| [Docker Desktop](https://www.docker.com/products/docker-desktop/) | Required by DDEV       |
+| [DDEV](https://ddev.readthedocs.io/en/stable/users/install/)      | Local dev environment  |
+| [Composer](https://getcomposer.org/download/)                     | PHP dependency manager |
+| [Git](https://git-scm.com/)                                       | Version control        |
 
 ---
 
@@ -121,6 +121,7 @@ ddev exec drush cr
 ```
 
 **Not tracked in git** (must be obtained separately or regenerated):
+
 - `vendor/` — restored by `composer install`
 - `web/core/` — restored by `composer install`
 - `web/modules/contrib/` — restored by `composer install`
@@ -133,6 +134,7 @@ ddev exec drush cr
 ## Troubleshooting
 
 **DDEV won't start**
+
 ```bash
 docker ps        # ensure Docker Desktop is running
 ddev poweroff    # stop all DDEV projects
@@ -140,11 +142,13 @@ ddev start       # retry
 ```
 
 **`ddev composer install` fails**
+
 ```bash
 ddev exec composer install --no-interaction -v
 ```
 
 **Config import errors**
+
 ```bash
 ddev exec drush cst   # review differences before importing
 ddev exec drush cim -y
@@ -152,6 +156,7 @@ ddev exec drush cim -y
 
 **`drush cim` reports UUID mismatch**
 The imported database must match the site UUID in config. Fix with:
+
 ```bash
 ddev exec drush config:set system.site uuid $(grep uuid config/sync/system.site.yml | awk '{print $2}') -y
 ddev exec drush cim -y
